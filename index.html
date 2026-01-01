@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novellium</title>
+    <appversion>1.0.0</appversion>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        novellium: {
+                            bg: '#1a0b2e',
+                            cyan: '#00f2ff',
+                            amber: '#ffd700',
+                            glass: 'rgba(255, 255, 255, 0.05)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    },
+                    boxShadow: {
+                        'glow-cyan': '0 0 20px rgba(0, 242, 255, 0.5)',
+                        'glow-amber': '0 0 20px rgba(255, 215, 0, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a0b2e;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 20%);
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(0, 242, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden px-4 text-center">
+        <!-- Floating Elements Animation (Simplified CSS) -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+            <div
+                class="absolute top-1/4 left-1/4 w-64 h-64 bg-novellium-cyan rounded-full mix-blend-screen filter blur-[100px] animate-pulse">
+            </div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-screen filter blur-[120px] animate-pulse"
+                style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="z-10 max-w-4xl mx-auto flex flex-col items-center gap-8">
+            <div
+                class="w-32 h-32 md:w-48 md:h-48 relative mb-4 glow-cyan rounded-2xl overflow-hidden glass-card flex items-center justify-center">
+                <!-- App Icon -->
+                <img src="assets/images/app-icon.png" alt="Novellium App Icon" class="w-full h-full object-cover">
+            </div>
+
+            <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight mb-2">
+                <span class="text-novellium-cyan text-glow">Novellium</span> The Narrative Engine
+            </h1>
+
+            <p class="font-serif text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed">
+                A fully portable, context-aware AI writing studio. No install, no cloud, no limits, all in a single
+                <span class="text-white font-semibold">14MB executable.</span><br>
+                <span class="text-novellium-cyan text-glow"><i>Private and Free, Forever.</i></span>
+            </p>
+
+            <div class="mt-8">
+                <a href="#"
+                    class="group relative inline-flex items-center gap-3 px-8 py-4 bg-novellium-cyan text-black font-display font-bold text-lg rounded-full shadow-glow-cyan transition-all hover:scale-105 hover:bg-white">
+                    <span>Download Novellium (v1.0 Under Construction, Coming Soon)</span>
+                    <i class="fa-solid fa-download group-hover:animate-bounce"></i>
+                </a>
+                <p class="mt-4 text-sm text-gray-400">Windows x64 • SHA-256 Verified</p>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fa-solid fa-chevron-down text-novellium-cyan text-2xl opacity-50"></i>
+        </div>
+    </header>
+
+    <!-- The Impossible Specs Strip -->
+    <section class="border-y border-white/10 bg-black/20 backdrop-blur-md py-6">
+        <div class="container mx-auto px-4">
+            <div
+                class="flex flex-wrap justify-center md:justify-between items-center gap-6 md:gap-12 text-gray-300 font-display text-sm md:text-base uppercase tracking-widest">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-eye-slash text-novellium-cyan"></i>
+                    <span>Zero Telemetry</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-infinity text-novellium-cyan"></i>
+                    <span>Infinite Memory</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-layer-group text-novellium-cyan"></i>
+                    <span>Model Agnostic</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-ethernet text-novellium-cyan"></i>
+                    <span>MCP Integration</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid -->
+    <section class="py-24 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="border-b-2 border-novellium-cyan pb-2">Augmented</span> Creativity
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Card 1 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <i class="fa-solid fa-brain text-8xl text-novellium-cyan"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display text-2xl font-bold mb-4 text-novellium-cyan">Active Context Retrieval
+                        </h3>
+                        <p class="font-serif text-gray-300 leading-relaxed">
+                            Hybrid Aspect Taxonomy + AI pre-prompt relevance. The app remembers your story
+                            details—characters, locations, and lore—so you don't have to constantly remind it.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <i class="fa-solid fa-pen-nib text-8xl text-novellium-amber"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display text-2xl font-bold mb-4 text-novellium-amber">Self-Updating Lore</h3>
+                        <p class="font-serif text-gray-300 leading-relaxed">
+                            As you write, Novellium can automatically create and update context cards, tracking
+                            character
+                            changes and plot developments for you.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <i class="fa-solid fa-timeline text-8xl text-pink-500"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display text-2xl font-bold mb-4 text-pink-400">Interactive Timeline</h3>
+                        <p class="font-serif text-gray-300 leading-relaxed">
+                            Visualize your narrative flow with a fully interactive timeline generator. Drag-and-drop
+                            events to restructure your plot instantly.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <i class="fa-solid fa-share-nodes text-8xl text-green-400"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display text-2xl font-bold mb-4 text-green-400">Local & External Integrations
+                        </h3>
+                        <p class="font-serif text-gray-300 leading-relaxed">
+                            Connect to external APIs, local LLMs (Ollama), and image generators for storyboarding, comic
+                            strip creation, and infinite extensibility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="py-24 bg-black/30 overflow-hidden">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="font-display text-3xl md:text-5xl font-bold mb-6">A Sanctuary for Your Words</h2>
+            <p class="font-serif text-xl text-gray-400 max-w-2xl mx-auto mb-12">
+                With dozens of app themes, adjustable UI, and multiple built-in sound sets, Novellium aims to provide a
+                comfortable environment for you to create your stories.
+            </p>
+
+            <!-- 3D Carousel Viewport -->
+            <div id="carousel-viewport"
+                class="relative max-w-6xl mx-auto h-[500px] flex items-center justify-center perspective-[1000px]">
+
+                <!-- Controls Overlay (Z-Index High) -->
+                <div
+                    class="absolute top-0 left-0 w-full h-full z-50 pointer-events-none flex justify-between items-center px-4 md:px-12">
+                    <button id="prev-theme"
+                        class="pointer-events-auto w-12 h-12 rounded-full bg-black/50 backdrop-blur-md text-white/50 hover:text-novellium-cyan hover:bg-black/80 transition-all flex items-center justify-center border border-white/10 z-50">
+                        <i class="fa-solid fa-chevron-left text-xl"></i>
+                    </button>
+                    <button id="next-theme"
+                        class="pointer-events-auto w-12 h-12 rounded-full bg-black/50 backdrop-blur-md text-white/50 hover:text-novellium-cyan hover:bg-black/80 transition-all flex items-center justify-center border border-white/10 z-50">
+                        <i class="fa-solid fa-chevron-right text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Theme Name Display (Top Center) -->
+                <div
+                    class="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 bg-black/40 backdrop-blur-md px-6 py-2 rounded-full border border-white/10">
+                    <span id="theme-name"
+                        class="font-display font-bold text-sm uppercase tracking-widest text-white/80">Deep Space</span>
+                </div>
+
+                <!-- Sound Controls (Bottom Center) -->
+                <div
+                    class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-black/60 backdrop-blur-xl px-4 py-2 rounded-full border border-white/10 flex items-center gap-3 pointer-events-auto transition-all hover:bg-black/80 hover:border-novellium-cyan/50 shadow-lg">
+                    <i class="fa-solid fa-volume-high text-novellium-cyan text-sm"></i>
+                    <div class="relative">
+                        <select id="sound-pack-select"
+                            class="appearance-none bg-transparent text-xs text-white/90 font-mono font-bold uppercase tracking-wider outline-none cursor-pointer pr-6 py-1 border-none focus:ring-0">
+                            <option value="typewriter" class="bg-gray-900 text-white">Typewriter</option>
+                            <option value="keyboard" class="bg-gray-900 text-white">Mech Keyboard</option>
+                            <option value="pencil" class="bg-gray-900 text-white">Pencil</option>
+                            <option value="pen" class="bg-gray-900 text-white">Pen</option>
+                            <option value="scissorswitch_keyboard" class="bg-gray-900 text-white">Laptop</option>
+                        </select>
+                        <i
+                            class="fa-solid fa-chevron-down absolute right-0 top-1/2 transform -translate-y-1/2 text-[10px] text-white/50 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <!-- Carousel Track -->
+                <div id="carousel-track" class="relative w-full h-full flex items-center justify-center preserve-3d">
+                    <!-- Cards will be injected by JS -->
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Sound Manifest -->
+    <script src="assets/sound_manifest.js"></script>
+
+    <!-- Interactive Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Theme Data ---
+            const themes = [
+                { name: 'Light', bg: '#ffffff', text: '#111827', font: 'font-serif' },
+                { name: 'Dark', bg: '#111827', text: '#f9fafb', font: 'font-serif' },
+                { name: 'Purple', bg: '#0d0015', text: '#f5f3ff', font: 'font-serif' },
+                { name: 'Ocean', bg: '#0f172a', text: '#f1f5f9', font: 'font-serif' },
+                { name: 'Emerald', bg: '#071512', text: '#f0fdf4', font: 'font-serif' },
+                { name: 'Mint', bg: '#0f1b1e', text: '#f0fdfa', font: 'font-serif' },
+                { name: 'Forest', bg: '#1a1814', text: '#e8e4d9', font: 'font-serif' },
+                { name: 'Parchment', bg: '#f5f0e1', text: '#3d3225', font: 'font-serif' },
+                { name: 'Sepia', bg: '#f4ecd8', text: '#3d3225', font: 'font-serif' },
+                { name: 'Nightshade', bg: '#282a36', text: '#f8f8f2', font: 'font-serif' },
+                { name: 'Nord', bg: '#2e3440', text: '#eceff4', font: 'font-serif' },
+                { name: 'Monokai', bg: '#272822', text: '#f8f8f2', font: 'font-serif' },
+                { name: 'Gruvbox', bg: '#282828', text: '#ebdbb2', font: 'font-serif' },
+                { name: 'Rose Pine', bg: '#191724', text: '#e0def4', font: 'font-serif' },
+                { name: 'Tokyo Night', bg: '#1a1b26', text: '#c0caf5', font: 'font-serif' },
+                { name: 'Cobalt', bg: '#002240', text: '#ffffff', font: 'font-serif' },
+                { name: 'Solarized', bg: '#002b36', text: '#839496', font: 'font-serif' },
+                { name: 'Catppuccin', bg: '#1e1e2e', text: '#cdd6f4', font: 'font-serif' },
+                { name: 'Spartan', bg: '#0d1210', text: '#e2e8e4', font: 'font-serif' },
+                { name: 'Night City', bg: '#050505', text: '#e0e0e0', font: 'font-serif' },
+                { name: 'Dragonborn', bg: '#141414', text: '#e8e8e8', font: 'font-serif' },
+                { name: 'System', bg: '#020502', text: '#b0f0b0', font: 'font-mono' },
+                { name: 'Wasteland', bg: '#080a08', text: '#ceffce', font: 'font-mono' },
+                { name: 'Commander', bg: '#0b0c10', text: '#f0f0f0', font: 'font-serif' },
+                { name: 'Budapest', bg: '#FFF0F5', text: '#510056', font: 'font-serif' },
+                { name: 'Arrakis', bg: '#F3E5AB', text: '#3D2B1F', font: 'font-serif' },
+                { name: 'Shire', bg: '#F9FDF5', text: '#2F3A23', font: 'font-serif' },
+                { name: 'Gatsby', bg: '#FAF9F6', text: '#1A1A1A', font: 'font-serif' },
+                { name: 'Her', bg: '#FFF5EE', text: '#4A2C2A', font: 'font-serif' },
+                { name: 'Totoro', bg: '#F7EEE9', text: '#4A5D6A', font: 'font-serif' }
+            ];
+
+            let currentIndex = 0;
+            const track = document.getElementById('carousel-track');
+            const themeNameDisplay = document.getElementById('theme-name');
+            const soundSelect = document.getElementById('sound-pack-select');
+            let activeTextarea = null; // Reference to the currently active textarea
+
+            function renderCarousel() {
+                track.innerHTML = ''; // Clear current
+
+                // Calculate indices
+                const prevIndex = (currentIndex - 1 + themes.length) % themes.length;
+                const nextIndex = (currentIndex + 1) % themes.length;
+
+                // Helper to create card
+                const createCard = (index, position) => {
+                    const theme = themes[index];
+                    const card = document.createElement('div');
+
+                    // Base styles
+                    let classes = "absolute w-[600px] h-[350px] rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out border border-white/5 flex flex-col items-center justify-center";
+                    let zIndex = 0;
+                    let transform = "";
+                    let opacity = "1";
+                    let pointerEvents = "pointer-events-none"; // Default disabled
+
+                    if (position === 'center') {
+                        zIndex = 30;
+                        transform = "scale(1) translateX(0) translateZ(0)";
+                        opacity = "1";
+                        pointerEvents = "pointer-events-auto";
+                        classes += " shadow-glow-cyan"; // Highlight active
+                    } else if (position === 'left') {
+                        zIndex = 10;
+                        transform = "scale(0.85) translateX(-65%) translateZ(-100px) rotateY(15deg)";
+                        opacity = "0.4";
+                    } else if (position === 'right') {
+                        zIndex = 10;
+                        transform = "scale(0.85) translateX(65%) translateZ(-100px) rotateY(-15deg)";
+                        opacity = "0.4";
+                    }
+
+                    card.className = classes;
+                    card.style.zIndex = zIndex;
+                    card.style.transform = transform;
+                    card.style.opacity = opacity;
+                    card.style.pointerEvents = pointerEvents;
+
+                    // Apply Theme Colors
+                    card.style.backgroundColor = theme.bg;
+
+                    // Content
+                    if (position === 'center') {
+                        // Interactive Textarea
+                        const area = document.createElement('textarea');
+                        // Use theme.text for placeholder color by injecting a style tag or using a specific class logic
+                        // Since we can't easily set placeholder color via inline style, we'll use a data attribute and dynamic CSS or just keep it simple
+                        // Actually, we can use the alpha channel of the theme.text for placeholder if it was hex, but it might be complex.
+                        // Simpler: Use a class that sets placeholder color to currentColor with opacity
+                        area.className = `w-full h-full bg-transparent border-none resize-none text-center outline-none ${theme.font} text-3xl md:text-5xl p-8 pt-20 transition-colors duration-300 placeholder-current placeholder-opacity-25`;
+                        area.style.color = theme.text;
+                        area.placeholder = "Type here...";
+                        area.maxLength = 30;
+                        area.spellcheck = false;
+
+                        // Re-attach listeners to the new active textarea
+                        area.addEventListener('keydown', handleKeydown);
+                        activeTextarea = area;
+
+                        card.appendChild(area);
+
+                        // Char count
+                        const count = document.createElement('div');
+                        count.className = `absolute bottom-4 right-4 text-xs font-mono opacity-30 pointer-events-none`;
+                        count.style.color = theme.text;
+                        count.innerHTML = '<span id="char-count">0</span>/30';
+                        card.appendChild(count);
+
+                        area.addEventListener('input', (e) => {
+                            count.querySelector('span').textContent = e.target.value.length;
+                        });
+
+                    } else {
+                        // Static Preview
+                        const previewText = document.createElement('div');
+                        previewText.className = `text-center ${theme.font} text-3xl font-bold opacity-40 select-none`;
+                        previewText.textContent = theme.name;
+                        previewText.style.color = theme.text;
+                        card.appendChild(previewText);
+                    }
+
+                    track.appendChild(card);
+                };
+
+                // Render Left, Center, Right
+                createCard(prevIndex, 'left');
+                createCard(currentIndex, 'center');
+                createCard(nextIndex, 'right');
+
+                // Update Name
+                themeNameDisplay.textContent = themes[currentIndex].name;
+
+                // Update Name UI colors based on brightness
+                const lightThemes = ['Parchment', 'Sepia', 'Paper White', 'Rose Pine', 'Tokyo Night']; // Add more if needed
+                // Reset common UI? Actually overlay is always dark glass, so white text is fine.
+            }
+
+            // --- Sound Manager ---
+            // Uses global SOUND_MANIFEST from assets/sound_manifest.js
+
+            const handleKeydown = (e) => {
+                const type = e.key === 'Enter' ? 'enter' : (e.key === ' ' ? 'space' : 'standard');
+                if (e.key.length === 1 || type !== 'standard') playSound(type);
+            };
+
+            const playSound = (type) => {
+                const pack = soundSelect.value;
+
+                // Fallback if manifest is missing (simple robust check)
+                const config = (typeof SOUND_MANIFEST !== 'undefined' && SOUND_MANIFEST[pack]) ? SOUND_MANIFEST[pack] : null;
+
+                if (!config) {
+                    console.warn(`Sound pack ${pack} not found in manifest.`);
+                    return;
+                }
+
+                let filename = '';
+
+                // Helper to get random item from array
+                const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+                if (type === 'space' && config.space_count > 0) {
+                    filename = getRandom(config.space);
+                } else if (type === 'enter' && config.enter_count > 0) {
+                    filename = getRandom(config.enter);
+                } else if (config.standard_count > 0) {
+                    // Standard key (or fallback)
+                    filename = getRandom(config.standard);
+                } else {
+                    return;
+                }
+
+                const audio = new Audio(`assets/sounds/${pack}/${filename}`);
+                audio.volume = 0.5;
+                audio.play().catch(e => { /* Ignore playback errors */ });
+            };
+
+            // Controls
+            document.getElementById('prev-theme').addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + themes.length) % themes.length;
+                renderCarousel();
+            });
+
+            document.getElementById('next-theme').addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % themes.length;
+                renderCarousel();
+            });
+
+            // Initialize
+            renderCarousel();
+        });
+    </script>
+
+    <!-- Footer / Why Section -->
+    <footer class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="max-w-2xl mx-auto mb-16">
+                <i class="fa-solid fa-quote-left text-4xl text-novellium-cyan opacity-30 mb-6"></i>
+                <p class="font-serif text-lg md:text-xl leading-relaxed text-gray-300 mb-6">
+                    "Built for writers, not shareholders. No subscriptions, no data harvesting. Just a tool to help you
+                    finish your book."
+                </p>
+                <div class="font-display font-bold text-gray-500 uppercase tracking-widest text-sm">— The Developer
+                </div>
+            </div>
+
+            <a href="#"
+                class="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-novellium-cyan text-novellium-cyan font-display font-bold text-lg rounded-full hover:bg-novellium-cyan hover:text-black transition-all shadow-glow-cyan">
+                <span>Start Writing</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <div class="mt-16 text-gray-600 text-sm">
+                <p>&copy; 2026 Novellium. Forever Free.</p>
+                <div class="flex justify-center gap-6 mt-4">
+                    <a href="#" class="hover:text-novellium-cyan transition-colors"><i
+                            class="fa-brands fa-github text-xl"></i></a>
+                    <a href="#" class="hover:text-novellium-cyan transition-colors"><i
+                            class="fa-brands fa-discord text-xl"></i></a>
+                    <a href="#" class="hover:text-novellium-cyan transition-colors"><i
+                            class="fa-brands fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Background Glow -->
+        <div
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-64 bg-novellium-cyan/5 filter blur-[100px] pointer-events-none rounded-t-full">
+        </div>
+    </footer>
+
+</body>
+
+</html>
