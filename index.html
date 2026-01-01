@@ -104,7 +104,7 @@
             <div class="mt-8">
                 <a href="releases/Novellium.exe"
                     class="group relative inline-flex items-center gap-3 px-8 py-4 bg-novellium-cyan text-black font-display font-bold text-lg rounded-full shadow-glow-cyan transition-all hover:scale-105 hover:bg-white">
-                    <span>Download Novellium (v1.0 Under Construction, Coming Soon)</span>
+                    <span>Download Novellium v0.1.0 (Under Construction)</span>
                     <i class="fa-solid fa-download group-hover:animate-bounce"></i>
                 </a>
                 <p class="mt-4 text-sm text-gray-400">Windows x64 • SHA-256 Verified</p>
@@ -280,36 +280,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- Theme Data ---
             const themes = [
-                { name: 'Light', bg: '#ffffff', text: '#111827', font: 'font-serif' },
-                { name: 'Dark', bg: '#111827', text: '#f9fafb', font: 'font-serif' },
-                { name: 'Purple', bg: '#0d0015', text: '#f5f3ff', font: 'font-serif' },
-                { name: 'Ocean', bg: '#0f172a', text: '#f1f5f9', font: 'font-serif' },
-                { name: 'Emerald', bg: '#071512', text: '#f0fdf4', font: 'font-serif' },
-                { name: 'Mint', bg: '#0f1b1e', text: '#f0fdfa', font: 'font-serif' },
-                { name: 'Forest', bg: '#1a1814', text: '#e8e4d9', font: 'font-serif' },
-                { name: 'Parchment', bg: '#f5f0e1', text: '#3d3225', font: 'font-serif' },
-                { name: 'Sepia', bg: '#f4ecd8', text: '#3d3225', font: 'font-serif' },
-                { name: 'Nightshade', bg: '#282a36', text: '#f8f8f2', font: 'font-serif' },
-                { name: 'Nord', bg: '#2e3440', text: '#eceff4', font: 'font-serif' },
-                { name: 'Monokai', bg: '#272822', text: '#f8f8f2', font: 'font-serif' },
-                { name: 'Gruvbox', bg: '#282828', text: '#ebdbb2', font: 'font-serif' },
-                { name: 'Rose Pine', bg: '#191724', text: '#e0def4', font: 'font-serif' },
-                { name: 'Tokyo Night', bg: '#1a1b26', text: '#c0caf5', font: 'font-serif' },
-                { name: 'Cobalt', bg: '#002240', text: '#ffffff', font: 'font-serif' },
-                { name: 'Solarized', bg: '#002b36', text: '#839496', font: 'font-serif' },
-                { name: 'Catppuccin', bg: '#1e1e2e', text: '#cdd6f4', font: 'font-serif' },
-                { name: 'Spartan', bg: '#0d1210', text: '#e2e8e4', font: 'font-serif' },
-                { name: 'Night City', bg: '#050505', text: '#e0e0e0', font: 'font-serif' },
-                { name: 'Dragonborn', bg: '#141414', text: '#e8e8e8', font: 'font-serif' },
-                { name: 'System', bg: '#020502', text: '#b0f0b0', font: 'font-mono' },
-                { name: 'Wasteland', bg: '#080a08', text: '#ceffce', font: 'font-mono' },
-                { name: 'Commander', bg: '#0b0c10', text: '#f0f0f0', font: 'font-serif' },
-                { name: 'Budapest', bg: '#FFF0F5', text: '#510056', font: 'font-serif' },
-                { name: 'Arrakis', bg: '#F3E5AB', text: '#3D2B1F', font: 'font-serif' },
-                { name: 'Shire', bg: '#F9FDF5', text: '#2F3A23', font: 'font-serif' },
-                { name: 'Gatsby', bg: '#FAF9F6', text: '#1A1A1A', font: 'font-serif' },
-                { name: 'Her', bg: '#FFF5EE', text: '#4A2C2A', font: 'font-serif' },
-                { name: 'Totoro', bg: '#F7EEE9', text: '#4A5D6A', font: 'font-serif' }
+                { name: 'Light', bg: '#ffffff', text: '#111827', surface: '#f9fafb', primary: '#6366f1', secondary: '#8b5cf6', border: '#e5e7eb', font: 'font-serif' },
+                { name: 'Dark', bg: '#111827', text: '#f9fafb', surface: '#1f2937', primary: '#818cf8', secondary: '#a78bfa', border: '#374151', font: 'font-serif' },
+                { name: 'Purple', bg: '#0d0015', text: '#f5f3ff', surface: '#1a0a2e', primary: '#a855f7', secondary: '#ec4899', border: '#3b2066', font: 'font-serif' },
+                { name: 'Ocean', bg: '#0f172a', text: '#f1f5f9', surface: '#1e293b', primary: '#06b6d4', secondary: '#3b82f6', border: '#334155', font: 'font-serif' },
+                { name: 'Emerald', bg: '#071512', text: '#f0fdf4', surface: '#0f2920', primary: '#4ade80', secondary: '#fbbf24', border: '#14532d', font: 'font-serif' },
+                { name: 'Mint', bg: '#0f1b1e', text: '#f0fdfa', surface: '#162328', primary: '#2dd4bf', secondary: '#38bdf8', border: '#1e3a3a', font: 'font-serif' },
+                { name: 'Forest', bg: '#1a1814', text: '#e8e4d9', surface: '#2a2820', primary: '#8fbc8f', secondary: '#d4a574', border: '#3d3a30', font: 'font-serif' },
+                { name: 'Parchment', bg: '#f5f0e1', text: '#3d3225', surface: '#ebe6d5', primary: '#8b4513', secondary: '#b22222', border: '#d4c9b0', font: 'font-serif' },
+                { name: 'Sepia', bg: '#f4ecd8', text: '#3d3225', surface: '#e8dfc8', primary: '#5c4033', secondary: '#8b6914', border: '#c9bea6', font: 'font-serif' },
+                { name: 'Nightshade', bg: '#282a36', text: '#f8f8f2', surface: '#383a4a', primary: '#bd93f9', secondary: '#ff79c6', border: '#44475a', font: 'font-serif' },
+                { name: 'Nord', bg: '#2e3440', text: '#eceff4', surface: '#3b4252', primary: '#88c0d0', secondary: '#81a1c1', border: '#4c566a', font: 'font-serif' },
+                { name: 'Monokai', bg: '#272822', text: '#f8f8f2', surface: '#3e3d32', primary: '#f92672', secondary: '#a6e22e', border: '#49483e', font: 'font-serif' },
+                { name: 'Gruvbox', bg: '#282828', text: '#ebdbb2', surface: '#3c3836', primary: '#fabd2f', secondary: '#fe8019', border: '#504945', font: 'font-serif' },
+                { name: 'Rose Pine', bg: '#191724', text: '#e0def4', surface: '#1f1d2e', primary: '#ebbcba', secondary: '#c4a7e7', border: '#26233a', font: 'font-serif' },
+                { name: 'Tokyo Night', bg: '#1a1b26', text: '#c0caf5', surface: '#24283b', primary: '#7aa2f7', secondary: '#bb9af7', border: '#414868', font: 'font-serif' },
+                { name: 'Cobalt', bg: '#002240', text: '#ffffff', surface: '#003366', primary: '#0088ff', secondary: '#ff9d00', border: '#004488', font: 'font-serif' },
+                { name: 'Solarized', bg: '#002b36', text: '#839496', surface: '#073642', primary: '#268bd2', secondary: '#2aa198', border: '#073642', font: 'font-serif' },
+                { name: 'Catppuccin', bg: '#1e1e2e', text: '#cdd6f4', surface: '#313244', primary: '#cba6f7', secondary: '#f5c2e7', border: '#45475a', font: 'font-serif' },
+                { name: 'Spartan', bg: '#0d1210', text: '#e2e8e4', surface: '#1a2420', primary: '#5d7c64', secondary: '#d4af37', border: '#2c3a32', font: 'font-serif' },
+                { name: 'Night City', bg: '#050505', text: '#e0e0e0', surface: '#121212', primary: '#fcee0a', secondary: '#00f0ff', border: '#fcee0a', font: 'font-serif' },
+                { name: 'Dragonborn', bg: '#141414', text: '#e8e8e8', surface: '#1f2124', primary: '#77b8c8', secondary: '#ffffff', border: '#40444b', font: 'font-serif' },
+                { name: 'System', bg: '#020502', text: '#b0f0b0', surface: '#051005', primary: '#008f11', secondary: '#003b00', border: '#003b00', font: 'font-mono' },
+                { name: 'Wasteland', bg: '#080a08', text: '#ceffce', surface: '#0f180f', primary: '#1aff80', secondary: '#114224', border: '#114224', font: 'font-mono' },
+                { name: 'Commander', bg: '#0b0c10', text: '#f0f0f0', surface: '#1a1a1d', primary: '#c41e3a', secondary: '#ffffff', border: '#45a29e', font: 'font-serif' },
+                { name: 'Budapest', bg: '#FFF0F5', text: '#510056', surface: '#FFD7E6', primary: '#784283', secondary: '#F2A478', border: '#de83b2', font: 'font-serif' },
+                { name: 'Arrakis', bg: '#F3E5AB', text: '#3D2B1F', surface: '#E6D690', primary: '#C06C47', secondary: '#4A6D7C', border: '#d4c4a8', font: 'font-serif' },
+                { name: 'Shire', bg: '#F9FDF5', text: '#2F3A23', surface: '#ECF5E1', primary: '#4C7031', secondary: '#E6C229', border: '#cddbc4', font: 'font-serif' },
+                { name: 'Gatsby', bg: '#FAF9F6', text: '#1A1A1A', surface: '#F0EEE6', primary: '#D4AF37', secondary: '#000000', border: '#D4AF37', font: 'font-serif' },
+                { name: 'Her', bg: '#FFF5EE', text: '#4A2C2A', surface: '#FDE4D8', primary: '#D93B28', secondary: '#E8927C', border: '#f2d1c9', font: 'font-serif' },
+                { name: 'Totoro', bg: '#F7EEE9', text: '#4A5D6A', surface: '#E8F6F6', primary: '#5D8CAE', secondary: '#A6D784', border: '#d1dede', font: 'font-serif' }
             ];
 
             let currentIndex = 0;
@@ -414,7 +414,7 @@
                     const theme = themes[index];
                     const card = document.createElement('div');
 
-                    let classes = "absolute w-[600px] h-[350px] rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out border border-white/5 flex flex-col items-center justify-center";
+                    let classes = "absolute w-[600px] h-[350px] rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out border border-white/5 flex flex-col";
                     let zIndex = 0;
                     let transform = "";
                     let opacity = "1";
@@ -442,15 +442,90 @@
                     card.style.opacity = opacity;
                     card.style.pointerEvents = pointerEvents;
 
+                    // Main Background
                     card.style.backgroundColor = theme.bg;
 
                     if (position === 'center') {
-                        // Interactive Textarea
+                        // MINI APP UI LAYOUT
+                        const appContainer = document.createElement('div');
+                        appContainer.className = "w-full h-full flex overflow-hidden";
+
+                        // 1. Sidebar (Left)
+                        const sidebar = document.createElement('div');
+                        sidebar.className = "w-1/4 h-full flex flex-col p-4 gap-3";
+                        sidebar.style.backgroundColor = theme.surface;
+                        sidebar.style.borderRight = `1px solid ${theme.border}`;
+
+                        // Fake Sidebar Items
+                        const sidebarItem1 = document.createElement('div');
+                        sidebarItem1.className = "w-3/4 h-3 rounded opacity-50";
+                        sidebarItem1.style.backgroundColor = theme.text;
+
+                        const sidebarItem2 = document.createElement('div');
+                        sidebarItem2.className = "w-1/2 h-3 rounded opacity-30";
+                        sidebarItem2.style.backgroundColor = theme.text;
+
+                        const sidebarItem3 = document.createElement('div');
+                        sidebarItem3.className = "w-2/3 h-3 rounded opacity-30";
+                        sidebarItem3.style.backgroundColor = theme.text;
+
+                        const sidebarActiveItem = document.createElement('div');
+                        sidebarActiveItem.className = "w-full h-8 rounded mt-4 flex items-center px-2";
+                        sidebarActiveItem.style.backgroundColor = `${theme.primary}20`; // 20 hex = low opacity
+                        sidebarActiveItem.style.borderLeft = `3px solid ${theme.primary}`;
+
+                        const activeItemText = document.createElement('div');
+                        activeItemText.className = "w-1/2 h-2 rounded";
+                        activeItemText.style.backgroundColor = theme.primary;
+
+                        sidebarActiveItem.appendChild(activeItemText);
+
+                        sidebar.appendChild(sidebarItem1);
+                        sidebar.appendChild(sidebarItem2);
+                        sidebar.appendChild(sidebarItem3);
+                        sidebar.appendChild(sidebarActiveItem);
+
+
+                        // 2. Main Content Area (Right)
+                        const mainContent = document.createElement('div');
+                        mainContent.className = "flex-1 h-full flex flex-col relative";
+
+                        // Header
+                        const header = document.createElement('div');
+                        header.className = "w-full h-12 flex items-center justify-between px-6";
+                        header.style.borderBottom = `1px solid ${theme.border}`;
+
+                        const breadcrumb = document.createElement('div');
+                        breadcrumb.className = "w-1/3 h-3 rounded opacity-60";
+                        breadcrumb.style.backgroundColor = theme.text;
+
+                        const actionBtn = document.createElement('div');
+                        actionBtn.className = "w-8 h-8 rounded-full";
+                        actionBtn.style.backgroundColor = theme.primary;
+
+                        header.appendChild(breadcrumb);
+                        header.appendChild(actionBtn);
+
+                        // Editor Area (Textarea Parent)
+                        const editorContainer = document.createElement('div');
+                        editorContainer.className = "flex-1 w-full relative p-6 overflow-hidden flex flex-col";
+
+                        // Metadata Line (Date/Words)
+                        const metaLine = document.createElement('div');
+                        metaLine.className = "flex gap-2 mb-4 opacity-40";
+                        for (let i = 0; i < 3; i++) {
+                            const pill = document.createElement('div');
+                            pill.className = "w-16 h-2 rounded";
+                            pill.style.backgroundColor = theme.text;
+                            metaLine.appendChild(pill);
+                        }
+
+                        // Actual Interactive Textarea
                         const area = document.createElement('textarea');
-                        area.className = `w-full h-full bg-transparent border-none resize-none text-center outline-none ${theme.font} text-3xl md:text-5xl p-8 pt-20 transition-colors duration-300 placeholder-current placeholder-opacity-25`;
+                        area.className = `w-full flex-1 bg-transparent border-none resize-none outline-none ${theme.font} text-2xl md:text-3xl leading-relaxed transition-colors duration-300 placeholder-current placeholder-opacity-25`;
                         area.style.color = theme.text;
-                        area.placeholder = "Type here...";
-                        area.maxLength = 30;
+                        area.placeholder = "Start writing...";
+                        area.maxLength = 100; // Increased for layout
                         area.spellcheck = false;
 
                         // Unlock audio on first interaction
@@ -470,21 +545,41 @@
 
                         activeTextarea = area;
 
-                        card.appendChild(area);
+                        editorContainer.appendChild(metaLine);
+                        editorContainer.appendChild(area);
+                        mainContent.appendChild(header);
+                        mainContent.appendChild(editorContainer);
 
+                        appContainer.appendChild(sidebar);
+                        appContainer.appendChild(mainContent);
+                        card.appendChild(appContainer);
+
+                        // Character Count Overlay (Bottom Right of Editor)
                         const count = document.createElement('div');
-                        count.className = `absolute bottom-4 right-4 text-xs font-mono opacity-30 pointer-events-none`;
+                        count.className = `absolute bottom-4 right-6 text-[10px] font-mono opacity-30 pointer-events-none`;
                         count.style.color = theme.text;
-                        count.innerHTML = '<span id="char-count">0</span>/30';
-                        card.appendChild(count);
+                        count.innerHTML = '<span id="char-count">0</span> words';
+                        editorContainer.appendChild(count); // Append to editor container now
 
                         area.addEventListener('input', (e) => {
-                            count.querySelector('span').textContent = e.target.value.length;
+                            // Simple rough word count
+                            const words = e.target.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+                            count.querySelector('span').textContent = words;
                         });
 
                     } else {
+                        // Side Cards - Simple Preview
+                        // Just the container background is set above.
+                        // We can add a simple "Sidebar" block to distinguish it visually
+
+                        const simpleSidebar = document.createElement('div');
+                        simpleSidebar.className = "absolute left-0 top-0 bottom-0 w-1/4 opacity-30";
+                        simpleSidebar.style.backgroundColor = theme.surface;
+                        simpleSidebar.style.borderRight = `1px solid ${theme.border}`;
+                        card.appendChild(simpleSidebar);
+
                         const previewText = document.createElement('div');
-                        previewText.className = `text-center ${theme.font} text-3xl font-bold opacity-40 select-none`;
+                        previewText.className = `absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center ${theme.font} text-3xl font-bold opacity-40 select-none`;
                         previewText.textContent = theme.name;
                         previewText.style.color = theme.text;
                         card.appendChild(previewText);
