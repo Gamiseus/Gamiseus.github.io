@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novellium</title>
     <link rel="icon" type="image/png" href="assets/images/app-icon.png">
-    <appversion hidden="1.0.0"></appversion>
+    <appversion hidden="0.1.0"></appversion>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -90,13 +90,15 @@
             </div>
 
             <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight mb-2">
-                <span class="text-novellium-cyan text-glow">Novellium</span> The Narrative Engine
+                <span class="text-novellium-cyan text-glow">Novellium</span>
+                <br>
+                <span class="text-novellium-amber text-glow">The Narrative Engine</span>
             </h1>
 
             <p class="font-serif text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed">
                 A fully portable, context-aware AI writing studio. No install, no cloud, no limits, all in a single
                 <span class="text-white font-semibold">14MB executable.</span><br>
-                <span class="text-novellium-cyan text-glow"><i>Private and Free, Forever.</i></span>
+                <span class="text-novellium-amber text-glow"><i>Private and Free, Forever.</i></span>
             </p>
 
             <div class="mt-8">
@@ -328,19 +330,18 @@
                     const theme = themes[index];
                     const card = document.createElement('div');
 
-                    // Base styles
                     let classes = "absolute w-[600px] h-[350px] rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out border border-white/5 flex flex-col items-center justify-center";
                     let zIndex = 0;
                     let transform = "";
                     let opacity = "1";
-                    let pointerEvents = "pointer-events-none"; // Default disabled
+                    let pointerEvents = "pointer-events-none";
 
                     if (position === 'center') {
                         zIndex = 30;
                         transform = "scale(1) translateX(0) translateZ(0)";
                         opacity = "1";
                         pointerEvents = "pointer-events-auto";
-                        classes += " shadow-glow-cyan"; // Highlight active
+                        classes += " shadow-glow-cyan";
                     } else if (position === 'left') {
                         zIndex = 10;
                         transform = "scale(0.85) translateX(-65%) translateZ(-100px) rotateY(15deg)";
@@ -357,17 +358,11 @@
                     card.style.opacity = opacity;
                     card.style.pointerEvents = pointerEvents;
 
-                    // Apply Theme Colors
                     card.style.backgroundColor = theme.bg;
 
-                    // Content
                     if (position === 'center') {
                         // Interactive Textarea
                         const area = document.createElement('textarea');
-                        // Use theme.text for placeholder color by injecting a style tag or using a specific class logic
-                        // Since we can't easily set placeholder color via inline style, we'll use a data attribute and dynamic CSS or just keep it simple
-                        // Actually, we can use the alpha channel of the theme.text for placeholder if it was hex, but it might be complex.
-                        // Simpler: Use a class that sets placeholder color to currentColor with opacity
                         area.className = `w-full h-full bg-transparent border-none resize-none text-center outline-none ${theme.font} text-3xl md:text-5xl p-8 pt-20 transition-colors duration-300 placeholder-current placeholder-opacity-25`;
                         area.style.color = theme.text;
                         area.placeholder = "Type here...";
@@ -380,7 +375,6 @@
 
                         card.appendChild(area);
 
-                        // Char count
                         const count = document.createElement('div');
                         count.className = `absolute bottom-4 right-4 text-xs font-mono opacity-30 pointer-events-none`;
                         count.style.color = theme.text;
@@ -392,7 +386,6 @@
                         });
 
                     } else {
-                        // Static Preview
                         const previewText = document.createElement('div');
                         previewText.className = `text-center ${theme.font} text-3xl font-bold opacity-40 select-none`;
                         previewText.textContent = theme.name;
@@ -403,17 +396,11 @@
                     track.appendChild(card);
                 };
 
-                // Render Left, Center, Right
                 createCard(prevIndex, 'left');
                 createCard(currentIndex, 'center');
                 createCard(nextIndex, 'right');
 
-                // Update Name
                 themeNameDisplay.textContent = themes[currentIndex].name;
-
-                // Update Name UI colors based on brightness
-                const lightThemes = ['Parchment', 'Sepia', 'Paper White', 'Rose Pine', 'Tokyo Night']; // Add more if needed
-                // Reset common UI? Actually overlay is always dark glass, so white text is fine.
             }
 
             // --- Sound Manager ---
@@ -427,7 +414,7 @@
             const playSound = (type) => {
                 const pack = soundSelect.value;
 
-                // Fallback if manifest is missing (simple robust check)
+                // Fallback if manifest is missing
                 const config = (typeof SOUND_MANIFEST !== 'undefined' && SOUND_MANIFEST[pack]) ? SOUND_MANIFEST[pack] : null;
 
                 if (!config) {
@@ -437,7 +424,6 @@
 
                 let filename = '';
 
-                // Helper to get random item from array
                 const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
                 if (type === 'space' && config.space_count > 0) {
@@ -445,7 +431,6 @@
                 } else if (type === 'enter' && config.enter_count > 0) {
                     filename = getRandom(config.enter);
                 } else if (config.standard_count > 0) {
-                    // Standard key (or fallback)
                     filename = getRandom(config.standard);
                 } else {
                     return;
@@ -467,7 +452,6 @@
                 renderCarousel();
             });
 
-            // Initialize
             renderCarousel();
         });
     </script>
