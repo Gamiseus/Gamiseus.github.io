@@ -248,7 +248,7 @@
                 <!-- Sound Controls (Bottom Center) -->
                 <div
                     class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-black/60 backdrop-blur-xl px-4 py-2 rounded-full border border-white/10 flex items-center gap-3 pointer-events-auto transition-all hover:bg-black/80 hover:border-novellium-cyan/50 shadow-lg">
-                    <i class="fa-solid fa-volume-high text-novellium-cyan text-sm"></i>
+                    <i class="fa-solid fa-volume-high text-novellium-cyan text-sm opacity-50 transition-opacity"></i>
                     <div class="relative">
                         <select id="sound-pack-select"
                             class="appearance-none bg-transparent text-xs text-white/90 font-mono font-bold uppercase tracking-wider outline-none cursor-pointer pr-6 py-1 border-none focus:ring-0">
@@ -318,6 +318,90 @@
             const soundSelect = document.getElementById('sound-pack-select');
             let activeTextarea = null; // Reference to the currently active textarea
 
+            // Mobile detection
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            // Audio system state
+            let audioUnlocked = false;
+            let audioPool = {}; // Pool of pre-loaded audio objects
+            const POOL_SIZE = 5; // Number of audio objects per sound
+            let previousTextareaValue = ''; // Track previous value for mobile input detection
+
+            // Initialize audio context (required for mobile)
+            const unlockAudio = () => {
+                if (audioUnlocked) return;
+
+                // Create a dummy audio and try to play it
+                const silentAudio = new Audio();
+                silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+                silentAudio.play().then(() => {
+                    audioUnlocked = true;
+                    preloadAllSounds();
+                    updateAudioIndicator(true);
+                }).catch(() => {
+                    console.warn('Audio unlock failed, will retry on next interaction');
+                });
+            };
+
+            // Pre-load audio files into pool
+            const preloadAllSounds = () => {
+                if (!audioUnlocked || typeof SOUND_MANIFEST === 'undefined') return;
+
+                const pack = soundSelect.value;
+                const config = SOUND_MANIFEST[pack];
+                if (!config) return;
+
+                // Clear existing pool for this pack
+                audioPool[pack] = { standard: [], space: [], enter: [] };
+
+                // Pre-load standard sounds
+                const allStandard = config.standard || [];
+                if (allStandard.length > 0) {
+                    for (let i = 0; i < Math.min(POOL_SIZE, allStandard.length); i++) {
+                        const audio = new Audio();
+                        audio.src = `assets/sounds/${pack}/${allStandard[i % allStandard.length]}`;
+                        audio.volume = 0.5;
+                        audio.preload = 'auto';
+                        audioPool[pack].standard.push(audio);
+                    }
+                }
+
+                // Pre-load space sounds
+                const allSpace = config.space || [];
+                if (allSpace.length > 0) {
+                    for (let i = 0; i < Math.min(POOL_SIZE, allSpace.length); i++) {
+                        const audio = new Audio();
+                        audio.src = `assets/sounds/${pack}/${allSpace[i % allSpace.length]}`;
+                        audio.volume = 0.5;
+                        audio.preload = 'auto';
+                        audioPool[pack].space.push(audio);
+                    }
+                }
+
+                // Pre-load enter sounds
+                const allEnter = config.enter || [];
+                if (allEnter.length > 0) {
+                    for (let i = 0; i < Math.min(POOL_SIZE, allEnter.length); i++) {
+                        const audio = new Audio();
+                        audio.src = `assets/sounds/${pack}/${allEnter[i % allEnter.length]}`;
+                        audio.volume = 0.5;
+                        audio.preload = 'auto';
+                        audioPool[pack].enter.push(audio);
+                    }
+                }
+            };
+
+            // Update audio indicator visual feedback
+            const updateAudioIndicator = (enabled) => {
+                const indicator = document.getElementById('sound-pack-select');
+                const icon = document.querySelector('.fa-volume-high');
+                if (enabled) {
+                    if (icon) icon.classList.remove('opacity-50');
+                } else {
+                    if (icon) icon.classList.add('opacity-50');
+                }
+            };
+
             function renderCarousel() {
                 track.innerHTML = ''; // Clear current
 
@@ -369,8 +453,21 @@
                         area.maxLength = 30;
                         area.spellcheck = false;
 
+                        // Unlock audio on first interaction
+                        area.addEventListener('focus', unlockAudio, { once: true });
+                        area.addEventListener('touchstart', unlockAudio, { once: true });
+
                         // Re-attach listeners to the new active textarea
                         area.addEventListener('keydown', handleKeydown);
+
+                        // Add input listener for mobile virtual keyboards
+                        area.addEventListener('input', handleInput);
+
+                        // Track the previous value for mobile input detection
+                        area.addEventListener('focus', () => {
+                            previousTextareaValue = area.value;
+                        });
+
                         activeTextarea = area;
 
                         card.appendChild(area);
@@ -411,7 +508,36 @@
                 if (e.key.length === 1 || type !== 'standard') playSound(type);
             };
 
+            // Handle input events for mobile virtual keyboards
+            const handleInput = (e) => {
+                if (!isMobile) return; // Only use on mobile
+
+                const currentValue = e.target.value;
+                const diff = currentValue.length - previousTextareaValue.length;
+
+                if (diff > 0) {
+                    // Character(s) added
+                    const addedChars = currentValue.slice(previousTextareaValue.length);
+                    for (let char of addedChars) {
+                        if (char === '\n') {
+                            playSound('enter');
+                        } else if (char === ' ') {
+                            playSound('space');
+                        } else {
+                            playSound('standard');
+                        }
+                    }
+                }
+
+                previousTextareaValue = currentValue;
+            };
+
             const playSound = (type) => {
+                if (!audioUnlocked) {
+                    unlockAudio();
+                    return; // Don't play this time, will work next time
+                }
+
                 const pack = soundSelect.value;
 
                 // Fallback if manifest is missing
@@ -422,23 +548,45 @@
                     return;
                 }
 
-                let filename = '';
-
-                const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+                // Use pre-loaded audio pool
+                let audioArray = null;
 
                 if (type === 'space' && config.space_count > 0) {
-                    filename = getRandom(config.space);
+                    audioArray = audioPool[pack]?.space;
                 } else if (type === 'enter' && config.enter_count > 0) {
-                    filename = getRandom(config.enter);
+                    audioArray = audioPool[pack]?.enter;
                 } else if (config.standard_count > 0) {
-                    filename = getRandom(config.standard);
-                } else {
+                    audioArray = audioPool[pack]?.standard;
+                }
+
+                // Fallback to creating new audio if pool doesn't exist
+                if (!audioArray || audioArray.length === 0) {
+                    let filename = '';
+                    const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+                    if (type === 'space' && config.space_count > 0) {
+                        filename = getRandom(config.space);
+                    } else if (type === 'enter' && config.enter_count > 0) {
+                        filename = getRandom(config.enter);
+                    } else if (config.standard_count > 0) {
+                        filename = getRandom(config.standard);
+                    } else {
+                        return;
+                    }
+
+                    const audio = new Audio(`assets/sounds/${pack}/${filename}`);
+                    audio.volume = 0.5;
+                    audio.play().catch(e => console.warn('Audio playback failed:', e));
                     return;
                 }
 
-                const audio = new Audio(`assets/sounds/${pack}/${filename}`);
-                audio.volume = 0.5;
-                audio.play().catch(e => { /* Ignore playback errors */ });
+                // Find an available audio element from pool
+                const availableAudio = audioArray.find(a => a.paused || a.ended) || audioArray[0];
+
+                if (availableAudio) {
+                    availableAudio.currentTime = 0; // Reset to start
+                    availableAudio.play().catch(e => console.warn('Audio playback failed:', e));
+                }
             };
 
             // Controls
@@ -452,7 +600,25 @@
                 renderCarousel();
             });
 
+            // Sound pack selector change
+            soundSelect.addEventListener('change', () => {
+                if (audioUnlocked) {
+                    preloadAllSounds();
+                }
+            });
+
+            // Initialize on load
             renderCarousel();
+            updateAudioIndicator(false); // Start with indicator showing audio not ready
+
+            // Try to unlock audio on any user interaction with the page
+            const globalUnlock = () => {
+                unlockAudio();
+                document.removeEventListener('click', globalUnlock);
+                document.removeEventListener('touchstart', globalUnlock);
+            };
+            document.addEventListener('click', globalUnlock);
+            document.addEventListener('touchstart', globalUnlock);
         });
     </script>
 
