@@ -15,7 +15,7 @@ const packs = fs.readdirSync(soundsDir).filter(f => fs.statSync(path.join(sounds
 
 packs.forEach(pack => {
     const packDir = path.join(soundsDir, pack);
-    const files = fs.readdirSync(packDir).filter(f => f.endsWith('.wav'));
+    const files = fs.readdirSync(packDir).filter(f => /\.(wav|ogg|mp3)$/i.test(f));
 
     // Initialize pack config
     manifest[pack] = {
