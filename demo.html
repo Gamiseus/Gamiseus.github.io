@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novellium Demo - Try the Editor</title>
+    <link rel="icon" type="image/png" href="assets/images/app-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================================================
+           Novellium Demo - Extracted from Source
+           ============================================================================ */
+
+        /* CSS Reset */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Light Theme - Default */
+            --color-primary: #6366f1;
+            --color-secondary: #8b5cf6;
+            --color-background: #ffffff;
+            --color-surface: #f9fafb;
+            --color-text: #111827;
+            --color-text-secondary: #6b7280;
+            --color-border: #e5e7eb;
+            --color-surface-hover: #f3f4f6;
+            --color-primary-hover: #4f46e5;
+
+            /* Fonts */
+            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-serif: 'Lora', Georgia, serif;
+            --font-mono: 'Monaco', 'Courier New', monospace;
+
+            /* Sizes */
+            --font-size: 16px;
+            --line-height: 1.6;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: var(--font-size);
+            line-height: var(--line-height);
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-text-secondary);
+        }
+
+        /* Selection */
+        ::selection {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* ==================== App Layout ==================== */
+        .app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 100;
+            flex-shrink: 0;
+        }
+
+        .workspace-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .workspace-icon {
+            font-size: 16px;
+        }
+
+        .tab-bar-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--color-text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .tab-button:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+        }
+
+        .tab-button.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .tab-bar-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-left: auto;
+        }
+
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .theme-selector label {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-select {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .theme-select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* ==================== Main Content Area ==================== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Document Sidebar */
+        .document-sidebar {
+            width: 260px;
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .new-doc-button,
+        .import-button {
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--color-border);
+            background: var(--color-background);
+            color: var(--color-text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .new-doc-button:hover,
+        .import-button:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .documents-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .document-item:hover {
+            border-color: var(--color-primary);
+            transform: translateX(2px);
+        }
+
+        .document-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .doc-reorder-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .reorder-button {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 0.6rem;
+            padding: 2px;
+            opacity: 0.5;
+            transition: opacity 0.15s;
+        }
+
+        .reorder-button:hover {
+            opacity: 1;
+        }
+
+        .reorder-button:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .doc-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .doc-title {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--color-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .doc-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--color-text-secondary);
+            margin-top: 2px;
+        }
+
+        .separator {
+            opacity: 0.5;
+        }
+
+        /* ==================== Writing Area ==================== */
+        .writing-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Editor Toolbar */
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            flex-wrap: wrap;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .toolbar-button {
+            padding: 0.5rem 0.65rem;
+            border: 1px solid var(--color-border);
+            background: var(--color-background);
+            color: var(--color-text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.15s;
+            min-width: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar-button:hover:not(:disabled) {
+            background: var(--color-surface-hover);
+            border-color: var(--color-primary);
+        }
+
+        .toolbar-button.is-active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            height: 1.5rem;
+            background: var(--color-border);
+            margin: 0 0.25rem;
+        }
+
+        /* Editor Container */
+        .editor-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: var(--color-background);
+        }
+
+        .editor-content {
+            max-width: 750px;
+            margin: 0 auto;
+            min-height: 100%;
+        }
+
+        /* ContentEditable Editor */
+        .prose-editor {
+            outline: none;
+            font-family: var(--font-serif);
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--color-text);
+            min-height: 400px;
+        }
+
+        .prose-editor[contenteditable]:empty:before {
+            content: attr(data-placeholder);
+            color: var(--color-text-secondary);
+            pointer-events: none;
+        }
+
+        .prose-editor p {
+            margin: 1em 0;
+        }
+
+        .prose-editor h1,
+        .prose-editor h2,
+        .prose-editor h3 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 1.5em 0 0.5em;
+            color: var(--color-text);
+        }
+
+        .prose-editor h1 {
+            font-size: 2rem;
+        }
+
+        .prose-editor h2 {
+            font-size: 1.5rem;
+        }
+
+        .prose-editor h3 {
+            font-size: 1.25rem;
+        }
+
+        .prose-editor blockquote {
+            border-left: 3px solid var(--color-border);
+            padding-left: 1rem;
+            margin: 1em 0;
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+        /* Status Bar */
+        .editor-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 2rem;
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            flex-shrink: 0;
+        }
+
+        .status-section {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-label {
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+
+        .status-value {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .status-separator {
+            width: 1px;
+            height: 1rem;
+            background: var(--color-border);
+        }
+
+        .status-utility-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .status-utility-btn {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: var(--color-text);
+            transition: all 0.15s;
+        }
+
+        .status-utility-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* AI Input Box */
+        .ai-input-box {
+            background: var(--color-surface);
+            border-top: 2px solid var(--color-primary);
+            padding: 1rem 2rem;
+            flex-shrink: 0;
+        }
+
+        .ai-input-container {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 0.75rem;
+            padding-right: 8rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            resize: none;
+            background: var(--color-background);
+            color: var(--color-text);
+            transition: border-color 0.15s;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .ai-input-actions {
+            position: absolute;
+            right: 0.5rem;
+            bottom: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-submit-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--color-primary);
+            color: white;
+            transition: all 0.15s;
+        }
+
+        .ai-submit-button:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .ai-quick-prompts {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-prompts-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+        }
+
+        .quick-prompt-button {
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .quick-prompt-button:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* Demo Banner */
+        .demo-banner {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .demo-banner a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .demo-banner-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Sound Toggle */
+        .sound-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            background: var(--color-background);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--color-text);
+            transition: all 0.15s;
+        }
+
+        .sound-toggle:hover {
+            border-color: var(--color-primary);
+        }
+
+        .sound-toggle.active {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        /* ==================== Inline AI Input ==================== */
+        .inline-ai-input-container {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            width: 600px;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .inline-input-bar {
+            display: flex;
+            align-items: center;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 10px 16px;
+            transition: all 0.2s ease;
+        }
+
+        .inline-input-bar:focus-within {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .inline-input-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            color: var(--color-text);
+            outline: none;
+            min-width: 300px;
+        }
+
+        .inline-input-bar input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .send-button {
+            background: var(--color-primary);
+            border: none;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .send-button:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Side Suggestions */
+        .side-suggestions {
+            position: absolute;
+            bottom: 80px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 40;
+        }
+
+        .side-suggestion-btn {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .side-suggestion-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+            transform: translateX(-4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Editor container needs position: relative for inline input */
+        .editor-container {
+            position: relative;
+        }
+
+        /* ==================== Page Scaffolds ==================== */
+        .page-content {
+            display: none;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .page-content.active {
+            display: flex;
+        }
+
+        /* Page scaffold */
+        .page-scaffold {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 2rem 3rem;
+            background: var(--color-background);
+        }
+
+        .page-scaffold h1 {
+            margin: 0 0 0.5rem;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .page-scaffold .page-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            margin: 0 0 1.5rem;
+        }
+
+        .page-scaffold .page-content-scroll {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Form sections */
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .form-section h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+            color: var(--color-text);
+        }
+
+        .form-section p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin: 0 0 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
+            color: var(--color-text);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* Context cards layout */
+        .context-cards-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            gap: 0;
+        }
+
+        .cards-sidebar {
+            width: 280px;
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cards-sidebar .sidebar-header {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cards-sidebar .sidebar-header h2 {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .cards-sidebar .search-input {
+            width: calc(100% - 1rem);
+            margin: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: 0.875rem;
+        }
+
+        .cards-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .card-list-item {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 0.25rem;
+            transition: all 0.15s;
+        }
+
+        .card-list-item:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .card-list-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .card-list-name {
+            font-weight: 500;
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+
+        .card-list-meta {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .cards-detail {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .cards-detail-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+
+        .cards-detail-empty h3 {
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem;
+            color: var(--color-text);
+        }
+
+        /* Card detail view */
+        .card-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-detail-header h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .card-entries {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .card-entry {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .card-entry-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-entry-value {
+            color: var(--color-text);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Analyzer page */
+        .analyzer-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .analyzer-controls {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+            height: fit-content;
+        }
+
+        .analyzer-controls h3 {
+            margin: 0 0 1rem;
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        .analyzer-results {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+            overflow-y: auto;
+        }
+
+        .analysis-result-item {
+            background: var(--color-background);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .analysis-result-item h4 {
+            margin: 0 0 0.5rem;
+            color: var(--color-primary);
+            font-size: 0.95rem;
+        }
+
+        .analysis-result-item p {
+            margin: 0;
+            color: var(--color-text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .result-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--color-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline placeholder */
+        .placeholder-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .placeholder-page h2 {
+            font-size: 1.5rem;
+            margin: 0 0 0.75rem;
+            color: var(--color-text);
+        }
+
+        .placeholder-page p {
+            color: var(--color-text-secondary);
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-create {
+            padding: 0.4rem 0.75rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app fade-in">
+        <!-- Demo Banner -->
+        <div class="demo-banner" id="demoBanner">
+            <span>🎮 <strong>Web Demo</strong> — This is a preview of Novellium's interface. Type to try it out!</span>
+            <a href="index.html">← Back to Main Site</a>
+            <button class="demo-banner-close"
+                onclick="document.getElementById('demoBanner').style.display='none'">×</button>
+        </div>
+
+        <!-- Tab Bar -->
+        <nav class="tab-bar">
+            <div class="workspace-badge">
+                <span class="workspace-icon">📚</span>
+                <span>My Novel</span>
+            </div>
+            <div class="tab-bar-tabs">
+                <button class="tab-button active" data-tab="writing">Writing</button>
+                <button class="tab-button" data-tab="prompt-config">Prompt Config</button>
+                <button class="tab-button" data-tab="characters">Characters</button>
+                <button class="tab-button" data-tab="analyzer">Analyzer</button>
+                <button class="tab-button" data-tab="timeline">Timeline</button>
+            </div>
+            <div class="tab-bar-right">
+                <div class="theme-selector">
+                    <label>Theme:</label>
+                    <select class="theme-select" id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark" selected>Dark</option>
+                        <option value="purple">Purple</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="emerald">Emerald</option>
+                        <option value="nord">Nord</option>
+                        <option value="rose-pine">Rose Pine</option>
+                        <option value="tokyo-night">Tokyo Night</option>
+                        <option value="gruvbox">Gruvbox</option>
+                        <option value="catppuccin">Catppuccin</option>
+                        <option value="sepia">Sepia</option>
+                        <option value="parchment">Parchment</option>
+                    </select>
+                </div>
+                <button class="sound-toggle" id="soundToggle" title="Toggle typing sounds">
+                    <span>🔊</span>
+                    <span>Sounds</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Document Sidebar -->
+            <aside class="document-sidebar">
+                <div class="sidebar-header">
+                    <h2>Chapters</h2>
+                    <div class="header-buttons">
+                        <button class="import-button" title="Import Chapter">⭳</button>
+                        <button class="new-doc-button">+ New</button>
+                    </div>
+                </div>
+                <div class="documents-list">
+                    <div class="document-item active">
+                        <div class="doc-reorder-controls">
+                            <button class="reorder-button" disabled>▲</button>
+                            <button class="reorder-button">▼</button>
+                        </div>
+                        <div class="doc-info">
+                            <div class="doc-title">Chapter 1: The Test</div>
+                            <div class="doc-meta">
+                                <span>2,450 words</span>
+                                <span class="separator">•</span>
+                                <span>Today</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document-item">
+                        <div class="doc-reorder-controls">
+                            <button class="reorder-button">▲</button>
+                            <button class="reorder-button">▼</button>
+                        </div>
+                        <div class="doc-info">
+                            <div class="doc-title">Chapter 2: The Journey</div>
+                            <div class="doc-meta">
+                                <span>1,823 words</span>
+                                <span class="separator">•</span>
+                                <span>Yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document-item">
+                        <div class="doc-reorder-controls">
+                            <button class="reorder-button">▲</button>
+                            <button class="reorder-button">▼</button>
+                        </div>
+                        <div class="doc-info">
+                            <div class="doc-title">Chapter 3: Discoveries</div>
+                            <div class="doc-meta">
+                                <span>987 words</span>
+                                <span class="separator">•</span>
+                                <span>3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document-item">
+                        <div class="doc-reorder-controls">
+                            <button class="reorder-button">▲</button>
+                            <button class="reorder-button" disabled>▼</button>
+                        </div>
+                        <div class="doc-info">
+                            <div class="doc-title">Chapter 4: The Conflict</div>
+                            <div class="doc-meta">
+                                <span>0 words</span>
+                                <span class="separator">•</span>
+                                <span>Draft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Writing Area -->
+            <main class="writing-area">
+                <!-- Editor Toolbar -->
+                <div class="editor-toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-button" data-command="bold"
+                            title="Bold (Ctrl+B)"><strong>B</strong></button>
+                        <button class="toolbar-button" data-command="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+                        <button class="toolbar-button" data-command="strikeThrough" title="Strikethrough">S̶</button>
+                    </div>
+                    <div class="toolbar-separator"></div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-button" data-command="formatBlock" data-value="h1"
+                            title="Heading 1">H1</button>
+                        <button class="toolbar-button" data-command="formatBlock" data-value="h2"
+                            title="Heading 2">H2</button>
+                        <button class="toolbar-button" data-command="formatBlock" data-value="h3"
+                            title="Heading 3">H3</button>
+                    </div>
+                    <div class="toolbar-separator"></div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-button" data-command="insertUnorderedList" title="Bullet List">•</button>
+                        <button class="toolbar-button" data-command="insertOrderedList"
+                            title="Numbered List">1.</button>
+                        <button class="toolbar-button" data-command="formatBlock" data-value="blockquote"
+                            title="Quote">"</button>
+                    </div>
+                    <div class="toolbar-separator"></div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-button" data-command="undo" title="Undo (Ctrl+Z)">↶</button>
+                        <button class="toolbar-button" data-command="redo" title="Redo (Ctrl+Y)">↷</button>
+                    </div>
+                    <div class="toolbar-separator"></div>
+                    <div class="toolbar-group">
+                        <button class="toolbar-button" data-command="formatBlock" data-value="p"
+                            title="Normal Paragraph">P</button>
+                    </div>
+                </div>
+
+                <!-- Editor Content -->
+                <div class="editor-container">
+                    <div class="editor-content">
+                        <div class="prose-editor" contenteditable="true" data-placeholder="Start writing your story..."
+                            id="editor">
+                            <h1>Chapter 1: The Test</h1>
+                            <p>This is a test version of the editor page, designed to be used as a demo for the real
+                                app.</p>
+                            <p>As such, it's not a complete version of the real page, but it should give you an idea of
+                                how it looks.</p>
+                            <blockquote>"There are a couple differences in the UI and some missing features, partially
+                                due to web constraints, and updates to the app taking more focus than I'm willing to
+                                give this demo."</blockquote>
+                            <p>Almost all of the UI is identical to the real app editor page, and while the other pages
+                                aren't visible, this is technically the most important page to demo anyways.</p>
+                            <p>The actual app is only 10 MB, and it's available for download for free, so if this demo
+                                interests you, you can download it from the main page</p>
+                            <p>Also, this whole editor is a functioning version of the real app editor, without data
+                                save functionality, so you can try it out and see how it works!</p>
+                        </div>
+                    </div>
+
+                    <!-- Inline AI Input (New Default) -->
+                    <div class="inline-ai-input-container" id="inlineAI">
+                        <div class="inline-input-bar">
+                            <div class="input-icon">✨</div>
+                            <input type="text" id="inlineAIInput" placeholder="Ask AI to write, edit, or continue..."
+                                autocomplete="off">
+                            <div class="input-actions">
+                                <button class="send-button" id="inlineSendBtn">↵</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Suggestions -->
+                    <div class="side-suggestions">
+                        <button class="side-suggestion-btn">Continue ✨</button>
+                        <button class="side-suggestion-btn">Describe scene</button>
+                        <button class="side-suggestion-btn">Add dialogue</button>
+                    </div>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="editor-status-bar">
+                    <div class="status-section">
+                        <span class="status-label">Words:</span>
+                        <span class="status-value" id="wordCount">186</span>
+                    </div>
+                    <div class="status-separator"></div>
+                    <div class="status-section">
+                        <span class="status-label">Characters:</span>
+                        <span class="status-value" id="charCount">1,089</span>
+                    </div>
+                    <div class="status-separator"></div>
+                    <div class="status-section">
+                        <span class="status-label">Reading time:</span>
+                        <span class="status-value">~1 min</span>
+                    </div>
+                    <div class="status-separator"></div>
+                    <div class="status-section">
+                        <span class="status-label" style="color: #10b981;">✓ Saved</span>
+                    </div>
+                    <div class="status-utility-buttons">
+                        <button class="status-utility-btn" title="Find & Replace">🔍</button>
+                        <button class="status-utility-btn" title="Export">📄</button>
+                        <button class="status-utility-btn" title="Context Cards (3 active)">📚 3</button>
+                    </div>
+                </div>
+
+                <!-- Legacy AI Panel (Hidden by default, can be toggled) -->
+                <div class="ai-input-box" id="legacyPanel" style="display: none;">
+                    <div class="ai-input-container">
+                        <textarea class="ai-input" rows="2"
+                            placeholder="Ask AI to help with your writing... (e.g., 'Continue the story' or 'Describe the forest')"></textarea>
+                        <div class="ai-input-actions">
+                            <button class="ai-submit-button">✨ Generate</button>
+                        </div>
+                    </div>
+                    <div class="ai-quick-prompts">
+                        <span class="quick-prompts-label">Quick:</span>
+                        <button class="quick-prompt-button">Continue</button>
+                        <button class="quick-prompt-button">Describe scene</button>
+                        <button class="quick-prompt-button">Add dialogue</button>
+                        <button class="quick-prompt-button">Expand paragraph</button>
+                        <button class="quick-prompt-button">Suggest next event</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Sound Manifest -->
+    <script src="assets/sound_manifest.js"></script>
+
+    <!-- Theme & Interaction Script -->
+    <script>
+        // Theme definitions (from themes.md)
+        const themes = {
+            'light': { bg: '#ffffff', text: '#111827', surface: '#f9fafb', primary: '#6366f1', secondary: '#8b5cf6', border: '#e5e7eb', surfaceHover: '#f3f4f6', primaryHover: '#4f46e5' },
+            'dark': { bg: '#111827', text: '#f9fafb', surface: '#1f2937', primary: '#818cf8', secondary: '#a78bfa', border: '#374151', surfaceHover: '#374151', primaryHover: '#6366f1' },
+            'purple': { bg: '#0d0015', text: '#f5f3ff', surface: '#1a0a2e', primary: '#a855f7', secondary: '#ec4899', border: '#3b2066', surfaceHover: '#2d1050', primaryHover: '#9333ea' },
+            'ocean': { bg: '#0f172a', text: '#f1f5f9', surface: '#1e293b', primary: '#06b6d4', secondary: '#3b82f6', border: '#334155', surfaceHover: '#334155', primaryHover: '#0891b2' },
+            'emerald': { bg: '#071512', text: '#f0fdf4', surface: '#0f2920', primary: '#4ade80', secondary: '#fbbf24', border: '#14532d', surfaceHover: '#166534', primaryHover: '#22c55e' },
+            'nord': { bg: '#2e3440', text: '#eceff4', surface: '#3b4252', primary: '#88c0d0', secondary: '#81a1c1', border: '#4c566a', surfaceHover: '#434c5e', primaryHover: '#8fbcbb' },
+            'rose-pine': { bg: '#191724', text: '#e0def4', surface: '#1f1d2e', primary: '#ebbcba', secondary: '#c4a7e7', border: '#26233a', surfaceHover: '#26233a', primaryHover: '#eb6f92' },
+            'tokyo-night': { bg: '#1a1b26', text: '#c0caf5', surface: '#24283b', primary: '#7aa2f7', secondary: '#bb9af7', border: '#414868', surfaceHover: '#414868', primaryHover: '#7dcfff' },
+            'gruvbox': { bg: '#282828', text: '#ebdbb2', surface: '#3c3836', primary: '#fabd2f', secondary: '#fe8019', border: '#504945', surfaceHover: '#504945', primaryHover: '#d79921' },
+            'catppuccin': { bg: '#1e1e2e', text: '#cdd6f4', surface: '#313244', primary: '#cba6f7', secondary: '#f5c2e7', border: '#45475a', surfaceHover: '#45475a', primaryHover: '#b4befe' },
+            'sepia': { bg: '#f4ecd8', text: '#3d3225', surface: '#e8dfc8', primary: '#5c4033', secondary: '#8b6914', border: '#c9bea6', surfaceHover: '#ddd4be', primaryHover: '#4a3228' },
+            'parchment': { bg: '#f5f0e1', text: '#3d3225', surface: '#ebe6d5', primary: '#8b4513', secondary: '#b22222', border: '#d4c9b0', surfaceHover: '#e0dbc8', primaryHover: '#723a10' },
+        };
+
+        // Apply theme
+        function applyTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return;
+
+            const root = document.documentElement;
+            root.style.setProperty('--color-background', theme.bg);
+            root.style.setProperty('--color-text', theme.text);
+            root.style.setProperty('--color-surface', theme.surface);
+            root.style.setProperty('--color-primary', theme.primary);
+            root.style.setProperty('--color-secondary', theme.secondary);
+            root.style.setProperty('--color-border', theme.border);
+            root.style.setProperty('--color-surface-hover', theme.surfaceHover);
+            root.style.setProperty('--color-primary-hover', theme.primaryHover);
+
+            // Update text-secondary based on theme brightness
+            const isLight = ['light', 'sepia', 'parchment'].includes(themeName);
+            root.style.setProperty('--color-text-secondary', isLight ? '#6b7280' : '#9ca3af');
+        }
+
+        // Theme selector
+        const themeSelect = document.getElementById('themeSelect');
+        themeSelect.addEventListener('change', (e) => {
+            applyTheme(e.target.value);
+            localStorage.setItem('novellium-demo-theme', e.target.value);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('novellium-demo-theme') || 'dark';
+        themeSelect.value = savedTheme;
+        applyTheme(savedTheme);
+
+        // Word count
+        const editor = document.getElementById('editor');
+        const wordCountEl = document.getElementById('wordCount');
+        const charCountEl = document.getElementById('charCount');
+
+        function updateCounts() {
+            const text = editor.innerText || '';
+            const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
+            const chars = text.length;
+            wordCountEl.textContent = words.toLocaleString();
+            charCountEl.textContent = chars.toLocaleString();
+        }
+
+        editor.addEventListener('input', updateCounts);
+
+        // Sound system
+        let soundEnabled = true;
+        let audioUnlocked = false;
+        const soundToggle = document.getElementById('soundToggle');
+
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundToggle.classList.toggle('active', soundEnabled);
+            soundToggle.querySelector('span:first-child').textContent = soundEnabled ? '🔊' : '🔇';
+        });
+
+        // Initially active
+        soundToggle.classList.add('active');
+
+        // Unlock audio on first interaction
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            const silentAudio = new Audio();
+            silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+            silentAudio.play().then(() => { audioUnlocked = true; }).catch(() => { });
+        }
+
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        // Play typing sound
+        function playSound(type) {
+            if (!soundEnabled || !audioUnlocked) return;
+            if (typeof SOUND_MANIFEST === 'undefined') return;
+
+            const pack = 'typewriter';
+            const config = SOUND_MANIFEST[pack];
+            if (!config) return;
+
+            let files;
+            if (type === 'enter' && config.enter?.length) {
+                files = config.enter;
+            } else if (type === 'space' && config.space?.length) {
+                files = config.space;
+            } else if (config.standard?.length) {
+                files = config.standard;
+            } else {
+                return;
+            }
+
+            const file = files[Math.floor(Math.random() * files.length)];
+            const audio = new Audio(`assets/sounds/${pack}/${file}`);
+            audio.volume = 0.4;
+            audio.play().catch(() => { });
+        }
+
+        // Keydown handler for sounds
+        editor.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') playSound('enter');
+            else if (e.key === ' ') playSound('space');
+            else if (e.key.length === 1) playSound('standard');
+        });
+
+        // Document item selection
+        document.querySelectorAll('.document-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.document-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Tab button interactions (visual only)
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Quick prompt buttons
+        document.querySelectorAll('.quick-prompt-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const aiInput = document.querySelector('.ai-input');
+                aiInput.value = btn.textContent + ' the story';
+                aiInput.focus();
+            });
+        });
+
+        // ==================== Toolbar Functionality ====================
+        // Execute formatting commands
+        function execCommand(command, value = null) {
+            editor.focus();
+            document.execCommand(command, false, value);
+            updateToolbarState();
+        }
+
+        // Update toolbar button active states
+        function updateToolbarState() {
+            document.querySelectorAll('.toolbar-button[data-command]').forEach(btn => {
+                const command = btn.dataset.command;
+                if (['bold', 'italic', 'strikeThrough', 'insertUnorderedList', 'insertOrderedList'].includes(command)) {
+                    btn.classList.toggle('is-active', document.queryCommandState(command));
+                }
+            });
+        }
+
+        // Toolbar button click handlers
+        document.querySelectorAll('.toolbar-button[data-command]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const command = btn.dataset.command;
+                const value = btn.dataset.value || null;
+
+                if (command === 'formatBlock' && value) {
+                    execCommand(command, '<' + value + '>');
+                } else {
+                    execCommand(command, value);
+                }
+            });
+        });
+
+        // Update state on selection change
+        document.addEventListener('selectionchange', () => {
+            if (document.activeElement === editor) {
+                updateToolbarState();
+            }
+        });
+
+        // Keyboard shortcuts
+        editor.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key.toLowerCase()) {
+                    case 'b':
+                        e.preventDefault();
+                        execCommand('bold');
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        execCommand('italic');
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        execCommand('underline');
+                        break;
+                }
+            }
+        });
+
+        // Side suggestion button handlers
+        document.querySelectorAll('.side-suggestion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inlineInput = document.getElementById('inlineAIInput');
+                inlineInput.value = btn.textContent.replace(' ✨', '');
+                inlineInput.focus();
+            });
+        });
+    </script>
+</body>
+
+</html>
