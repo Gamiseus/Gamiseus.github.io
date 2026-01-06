@@ -1135,11 +1135,13 @@
                 height: calc(100vh - 52px);
                 /* Full height minus tab bar */
                 overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
             }
 
             .page-content#page-writing {
-                overflow: hidden;
-                /* Writing page has its own scroll areas */
+                overflow: visible;
+                /* Let child elements handle scroll */
             }
 
             /* Tab bar: horizontal scroll */
@@ -1241,6 +1243,8 @@
             .writing-area {
                 width: 100%;
                 overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
                 height: calc(100vh - 100px);
                 /* Account for tab bar and banner */
             }
