@@ -1176,6 +1176,279 @@
             font-weight: 500;
             cursor: pointer;
         }
+
+        /* =====================================================
+           MOBILE RESPONSIVE STYLES
+           ===================================================== */
+
+        /* Tablet and smaller */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 200px 1fr;
+            }
+
+            .document-sidebar {
+                width: 200px;
+            }
+
+            .analyzer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analyzer-controls {
+                order: -1;
+            }
+        }
+
+        /* Mobile landscape / small tablet */
+        @media (max-width: 768px) {
+            .app {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            /* Tab bar: horizontal scroll */
+            .tab-bar {
+                flex-wrap: nowrap;
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+
+            .workspace-badge {
+                display: none;
+            }
+
+            .tab-bar-tabs {
+                display: flex;
+                gap: 0.25rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                flex: 1;
+            }
+
+            .tab-bar-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-button {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .tab-bar-right {
+                gap: 0.5rem;
+            }
+
+            .theme-selector label {
+                display: none;
+            }
+
+            .sound-toggle span:last-child {
+                display: none;
+            }
+
+            /* Hide document sidebar by default on mobile */
+            .main-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .document-sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                bottom: 0;
+                width: 280px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .document-sidebar.open {
+                left: 0;
+            }
+
+            /* Mobile sidebar toggle button */
+            .mobile-sidebar-toggle {
+                display: flex !important;
+                position: fixed;
+                bottom: 1rem;
+                left: 1rem;
+                width: 48px;
+                height: 48px;
+                background: var(--color-primary);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                font-size: 1.25rem;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 999;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .mobile-sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .mobile-sidebar-overlay.open {
+                display: block;
+            }
+
+            .writing-area {
+                width: 100%;
+            }
+
+            /* Editor adjustments */
+            .editor-toolbar {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+                gap: 0.25rem;
+            }
+
+            .toolbar-separator {
+                display: none;
+            }
+
+            .editor-content {
+                padding: 1rem;
+            }
+
+            .prose-editor {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            /* Hide side suggestions on mobile */
+            .side-suggestions {
+                display: none;
+            }
+
+            /* Inline AI adjustments */
+            .inline-ai-input-container {
+                left: 1rem;
+                right: 1rem;
+                transform: none;
+                width: auto;
+            }
+
+            /* Status bar */
+            .editor-status-bar {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+
+            .status-separator {
+                display: none;
+            }
+
+            /* Page scaffold adjustments */
+            .page-scaffold {
+                padding: 1rem;
+            }
+
+            .page-scaffold h1 {
+                font-size: 1.5rem;
+            }
+
+            /* Context cards: stack layout */
+            .context-cards-layout {
+                flex-direction: column;
+            }
+
+            .cards-sidebar {
+                width: 100%;
+                max-height: 40vh;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .cards-detail {
+                padding: 1rem;
+            }
+
+            /* Demo banner */
+            .demo-banner {
+                flex-wrap: wrap;
+                padding: 0.5rem 1rem;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .demo-banner span {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Mobile portrait */
+        @media (max-width: 480px) {
+            .tab-button {
+                padding: 0.35rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .editor-toolbar .toolbar-group {
+                gap: 0.125rem;
+            }
+
+            .toolbar-button {
+                padding: 0.35rem 0.5rem;
+                font-size: 0.8rem;
+                min-width: 28px;
+            }
+
+            .page-scaffold h1 {
+                font-size: 1.25rem;
+            }
+
+            .form-section {
+                padding: 1rem;
+            }
+
+            .card-detail-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .card-avatar {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+
+            /* Analyzer mobile */
+            .analysis-result-item {
+                padding: 1rem;
+            }
+
+            .result-tag {
+                font-size: 0.7rem;
+            }
+
+            /* Placeholder page */
+            .placeholder-icon {
+                font-size: 3rem;
+            }
+
+            .placeholder-page h2 {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Hide mobile toggle by default (shown via media query) */
+        .mobile-sidebar-toggle {
+            display: none;
+        }
     </style>
 </head>
 
@@ -1227,207 +1500,478 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Document Sidebar -->
-            <aside class="document-sidebar">
-                <div class="sidebar-header">
-                    <h2>Chapters</h2>
-                    <div class="header-buttons">
-                        <button class="import-button" title="Import Chapter">⭳</button>
-                        <button class="new-doc-button">+ New</button>
-                    </div>
-                </div>
-                <div class="documents-list">
-                    <div class="document-item active">
-                        <div class="doc-reorder-controls">
-                            <button class="reorder-button" disabled>▲</button>
-                            <button class="reorder-button">▼</button>
+        <!-- ==================== Writing Tab ==================== -->
+        <div class="page-content active" id="page-writing">
+            <div class="main-content">
+                <!-- Document Sidebar -->
+                <aside class="document-sidebar">
+                    <div class="sidebar-header">
+                        <h2>Chapters</h2>
+                        <div class="header-buttons">
+                            <button class="import-button" title="Import Chapter">⭳</button>
+                            <button class="new-doc-button">+ New</button>
                         </div>
-                        <div class="doc-info">
-                            <div class="doc-title">Chapter 1: The Test</div>
-                            <div class="doc-meta">
-                                <span>2,450 words</span>
-                                <span class="separator">•</span>
-                                <span>Today</span>
+                    </div>
+                    <div class="documents-list">
+                        <div class="document-item active">
+                            <div class="doc-reorder-controls">
+                                <button class="reorder-button" disabled>▲</button>
+                                <button class="reorder-button">▼</button>
+                            </div>
+                            <div class="doc-info">
+                                <div class="doc-title">Chapter 1: The Test</div>
+                                <div class="doc-meta">
+                                    <span>2,450 words</span>
+                                    <span class="separator">•</span>
+                                    <span>Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-item">
+                            <div class="doc-reorder-controls">
+                                <button class="reorder-button">▲</button>
+                                <button class="reorder-button">▼</button>
+                            </div>
+                            <div class="doc-info">
+                                <div class="doc-title">Chapter 2: The Journey</div>
+                                <div class="doc-meta">
+                                    <span>1,823 words</span>
+                                    <span class="separator">•</span>
+                                    <span>Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-item">
+                            <div class="doc-reorder-controls">
+                                <button class="reorder-button">▲</button>
+                                <button class="reorder-button">▼</button>
+                            </div>
+                            <div class="doc-info">
+                                <div class="doc-title">Chapter 3: Discoveries</div>
+                                <div class="doc-meta">
+                                    <span>987 words</span>
+                                    <span class="separator">•</span>
+                                    <span>3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-item">
+                            <div class="doc-reorder-controls">
+                                <button class="reorder-button">▲</button>
+                                <button class="reorder-button" disabled>▼</button>
+                            </div>
+                            <div class="doc-info">
+                                <div class="doc-title">Chapter 4: The Conflict</div>
+                                <div class="doc-meta">
+                                    <span>0 words</span>
+                                    <span class="separator">•</span>
+                                    <span>Draft</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="document-item">
-                        <div class="doc-reorder-controls">
-                            <button class="reorder-button">▲</button>
-                            <button class="reorder-button">▼</button>
+                </aside>
+
+                <!-- Writing Area -->
+                <main class="writing-area">
+                    <!-- Editor Toolbar -->
+                    <div class="editor-toolbar">
+                        <div class="toolbar-group">
+                            <button class="toolbar-button" data-command="bold"
+                                title="Bold (Ctrl+B)"><strong>B</strong></button>
+                            <button class="toolbar-button" data-command="italic"
+                                title="Italic (Ctrl+I)"><em>I</em></button>
+                            <button class="toolbar-button" data-command="strikeThrough"
+                                title="Strikethrough">S̶</button>
                         </div>
-                        <div class="doc-info">
-                            <div class="doc-title">Chapter 2: The Journey</div>
-                            <div class="doc-meta">
-                                <span>1,823 words</span>
-                                <span class="separator">•</span>
-                                <span>Yesterday</span>
+                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-group">
+                            <button class="toolbar-button" data-command="formatBlock" data-value="h1"
+                                title="Heading 1">H1</button>
+                            <button class="toolbar-button" data-command="formatBlock" data-value="h2"
+                                title="Heading 2">H2</button>
+                            <button class="toolbar-button" data-command="formatBlock" data-value="h3"
+                                title="Heading 3">H3</button>
+                        </div>
+                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-group">
+                            <button class="toolbar-button" data-command="insertUnorderedList"
+                                title="Bullet List">•</button>
+                            <button class="toolbar-button" data-command="insertOrderedList"
+                                title="Numbered List">1.</button>
+                            <button class="toolbar-button" data-command="formatBlock" data-value="blockquote"
+                                title="Quote">"</button>
+                        </div>
+                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-group">
+                            <button class="toolbar-button" data-command="undo" title="Undo (Ctrl+Z)">↶</button>
+                            <button class="toolbar-button" data-command="redo" title="Redo (Ctrl+Y)">↷</button>
+                        </div>
+                        <div class="toolbar-separator"></div>
+                        <div class="toolbar-group">
+                            <button class="toolbar-button" data-command="formatBlock" data-value="p"
+                                title="Normal Paragraph">P</button>
+                        </div>
+                    </div>
+
+                    <!-- Editor Content -->
+                    <div class="editor-container">
+                        <div class="editor-content">
+                            <div class="prose-editor" contenteditable="true"
+                                data-placeholder="Start writing your story..." id="editor">
+                                <h1>Chapter 1: The Test</h1>
+                                <p>This is a test version of the app, designed to be used as a demo.</p>
+                                <p>The whole editor is also a functioning version of the real app editor, without data
+                                    save functionality, so you can try it out and see how it works!</p>
+                                <p>There are a handful of differences in the UI, some missing features, and a
+                                    couple of extra pages not present here, partially due to web constraints, and
+                                    updates to the app ahead of this web demo.</p>
+                                <p>Most of the UI is accurate, and while the other pages aren't all functional in this
+                                    test, this is technically the most important page to demo anyways.</p>
+                                <p>The app itself is only 10 MB and it's available for download for free. If this demo
+                                    interests you, you can download it from the main page.</p>
+
+                                <p>Feel free to check out the other tabs as well, even if they don't work on this web
+                                    app version.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="document-item">
-                        <div class="doc-reorder-controls">
-                            <button class="reorder-button">▲</button>
-                            <button class="reorder-button">▼</button>
-                        </div>
-                        <div class="doc-info">
-                            <div class="doc-title">Chapter 3: Discoveries</div>
-                            <div class="doc-meta">
-                                <span>987 words</span>
-                                <span class="separator">•</span>
-                                <span>3 days ago</span>
+
+                        <!-- Inline AI Input (New Default) -->
+                        <div class="inline-ai-input-container" id="inlineAI">
+                            <div class="inline-input-bar">
+                                <div class="input-icon">✨</div>
+                                <input type="text" id="inlineAIInput"
+                                    placeholder="Ask AI to write, edit, or continue..." autocomplete="off">
+                                <div class="input-actions">
+                                    <button class="send-button" id="inlineSendBtn">↵</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="document-item">
-                        <div class="doc-reorder-controls">
-                            <button class="reorder-button">▲</button>
-                            <button class="reorder-button" disabled>▼</button>
+
+                        <!-- Side Suggestions -->
+                        <div class="side-suggestions">
+                            <button class="side-suggestion-btn">Continue ✨</button>
+                            <button class="side-suggestion-btn">Describe scene</button>
+                            <button class="side-suggestion-btn">Add dialogue</button>
                         </div>
-                        <div class="doc-info">
-                            <div class="doc-title">Chapter 4: The Conflict</div>
-                            <div class="doc-meta">
-                                <span>0 words</span>
-                                <span class="separator">•</span>
-                                <span>Draft</span>
+                    </div>
+
+                    <!-- Status Bar -->
+                    <div class="editor-status-bar">
+                        <div class="status-section">
+                            <span class="status-label">Words:</span>
+                            <span class="status-value" id="wordCount">186</span>
+                        </div>
+                        <div class="status-separator"></div>
+                        <div class="status-section">
+                            <span class="status-label">Characters:</span>
+                            <span class="status-value" id="charCount">1,089</span>
+                        </div>
+                        <div class="status-separator"></div>
+                        <div class="status-section">
+                            <span class="status-label">Reading time:</span>
+                            <span class="status-value">~1 min</span>
+                        </div>
+                        <div class="status-separator"></div>
+                        <div class="status-section">
+                            <span class="status-label" style="color: #10b981;">✓ Saved</span>
+                        </div>
+                        <div class="status-utility-buttons">
+                            <button class="status-utility-btn" title="Find & Replace">🔍</button>
+                            <button class="status-utility-btn" title="Export">📄</button>
+                            <button class="status-utility-btn" title="Context Cards (3 active)">📚 3</button>
+                        </div>
+                    </div>
+
+                    <!-- Legacy AI Panel (Hidden by default, can be toggled) -->
+                    <div class="ai-input-box" id="legacyPanel" style="display: none;">
+                        <div class="ai-input-container">
+                            <textarea class="ai-input" rows="2"
+                                placeholder="Ask AI to help with your writing... (e.g., 'Continue the story' or 'Describe the forest')"></textarea>
+                            <div class="ai-input-actions">
+                                <button class="ai-submit-button">✨ Generate</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </aside>
+                        <div class="ai-quick-prompts">
+                            <span class="quick-prompts-label">Quick:</span>
+                            <button class="quick-prompt-button">Continue</button>
+                            <button class="quick-prompt-button">Describe scene</button>
+                            <button class="quick-prompt-button">Add dialogue</button>
+                            <button class="quick-prompt-button">Expand paragraph</button>
+                            <button class="quick-prompt-button">Suggest next event</button>
+                        </div>
+                </main>
+            </div>
+        </div>
 
-            <!-- Writing Area -->
-            <main class="writing-area">
-                <!-- Editor Toolbar -->
-                <div class="editor-toolbar">
-                    <div class="toolbar-group">
-                        <button class="toolbar-button" data-command="bold"
-                            title="Bold (Ctrl+B)"><strong>B</strong></button>
-                        <button class="toolbar-button" data-command="italic" title="Italic (Ctrl+I)"><em>I</em></button>
-                        <button class="toolbar-button" data-command="strikeThrough" title="Strikethrough">S̶</button>
+        <!-- ==================== Prompt Config Tab ==================== -->
+        <div class="page-content" id="page-prompt-config">
+            <div class="page-scaffold">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div>
+                        <h1>AI System Prompt Configuration</h1>
+                        <p class="page-desc">Customize how the AI understands and assists with your story</p>
                     </div>
-                    <div class="toolbar-separator"></div>
-                    <div class="toolbar-group">
-                        <button class="toolbar-button" data-command="formatBlock" data-value="h1"
-                            title="Heading 1">H1</button>
-                        <button class="toolbar-button" data-command="formatBlock" data-value="h2"
-                            title="Heading 2">H2</button>
-                        <button class="toolbar-button" data-command="formatBlock" data-value="h3"
-                            title="Heading 3">H3</button>
-                    </div>
-                    <div class="toolbar-separator"></div>
-                    <div class="toolbar-group">
-                        <button class="toolbar-button" data-command="insertUnorderedList" title="Bullet List">•</button>
-                        <button class="toolbar-button" data-command="insertOrderedList"
-                            title="Numbered List">1.</button>
-                        <button class="toolbar-button" data-command="formatBlock" data-value="blockquote"
-                            title="Quote">"</button>
-                    </div>
-                    <div class="toolbar-separator"></div>
-                    <div class="toolbar-group">
-                        <button class="toolbar-button" data-command="undo" title="Undo (Ctrl+Z)">↶</button>
-                        <button class="toolbar-button" data-command="redo" title="Redo (Ctrl+Y)">↷</button>
-                    </div>
-                    <div class="toolbar-separator"></div>
-                    <div class="toolbar-group">
-                        <button class="toolbar-button" data-command="formatBlock" data-value="p"
-                            title="Normal Paragraph">P</button>
-                    </div>
+                    <button class="btn-primary">👁️ Preview Prompt</button>
                 </div>
 
-                <!-- Editor Content -->
-                <div class="editor-container">
-                    <div class="editor-content">
-                        <div class="prose-editor" contenteditable="true" data-placeholder="Start writing your story..."
-                            id="editor">
-                            <h1>Chapter 1: The Test</h1>
-                            <p>This is a test version of the editor page, designed to be used as a demo for the real
-                                app.</p>
-                            <p>As such, it's not a complete version of the real page, but it should give you an idea of
-                                how it looks.</p>
-                            <blockquote>"There are a couple differences in the UI and some missing features, partially
-                                due to web constraints, and updates to the app taking more focus than I'm willing to
-                                give this demo."</blockquote>
-                            <p>Most of the UI is accurate to the real app editor page, and while the other pages
-                                aren't all functional in this test, this is technically the most important page to demo
-                                anyways.</p>
-                            <p>The actual app is only 10 MB, and it's available for download for free, so if this demo
-                                interests you, you can download it from the main page</p>
-                            <p>Also, this whole editor is a functioning version of the real app editor, without data
-                                save functionality, so you can try it out and see how it works!</p>
+                <div
+                    style="display: flex; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">
+                    <select class="form-group"
+                        style="width: auto; padding: 0.5rem; border-radius: 6px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text);">
+                        <option disabled selected>Load from Template...</option>
+                        <option>Default Fiction</option>
+                        <option>Literary Fiction</option>
+                        <option>Genre Pulp</option>
+                        <option>Screenwriter Mode</option>
+                    </select>
+                    <button class="btn-secondary">Save as Template</button>
+                </div>
+
+                <div class="page-content-scroll">
+                    <!-- AI Persona Section -->
+                    <div class="form-section">
+                        <h2>AI Persona</h2>
+                        <p>Define the AI's role and expertise</p>
+                        <div class="form-group">
+                            <label>AI Role</label>
+                            <textarea rows="2"
+                                placeholder="e.g., 'a creative writing assistant'">a skilled creative writing assistant specializing in immersive fiction</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>AI Reasoning Level</label>
+                            <select>
+                                <option>None - Standard response (fastest)</option>
+                                <option>Low - Light reasoning</option>
+                                <option selected>Medium - Balanced (default)</option>
+                                <option>High - Deep thinking</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Inline AI Input (New Default) -->
-                    <div class="inline-ai-input-container" id="inlineAI">
-                        <div class="inline-input-bar">
-                            <div class="input-icon">✨</div>
-                            <input type="text" id="inlineAIInput" placeholder="Ask AI to write, edit, or continue..."
-                                autocomplete="off">
-                            <div class="input-actions">
-                                <button class="send-button" id="inlineSendBtn">↵</button>
-                            </div>
+                    <!-- Story Foundation Section -->
+                    <div class="form-section">
+                        <h2>Story Foundation</h2>
+                        <p>Core details about your story</p>
+                        <div class="form-group">
+                            <label>Core Premise</label>
+                            <textarea rows="3"
+                                placeholder="The fundamental concept of your story">A young soldier discovers her unique abilities mark her as both weapon and target in a war between human factions and alien colonizers.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <input type="text" value="Science Fiction, Military">
+                        </div>
+                        <div class="form-group">
+                            <label>Target Audience</label>
+                            <input type="text" value="Adult">
+                        </div>
+                        <div class="form-group">
+                            <label>Tone & Mood</label>
+                            <input type="text" value="Gritty, hopeful, action-driven">
                         </div>
                     </div>
 
-                    <!-- Side Suggestions -->
-                    <div class="side-suggestions">
-                        <button class="side-suggestion-btn">Continue ✨</button>
-                        <button class="side-suggestion-btn">Describe scene</button>
-                        <button class="side-suggestion-btn">Add dialogue</button>
-                    </div>
-                </div>
-
-                <!-- Status Bar -->
-                <div class="editor-status-bar">
-                    <div class="status-section">
-                        <span class="status-label">Words:</span>
-                        <span class="status-value" id="wordCount">186</span>
-                    </div>
-                    <div class="status-separator"></div>
-                    <div class="status-section">
-                        <span class="status-label">Characters:</span>
-                        <span class="status-value" id="charCount">1,089</span>
-                    </div>
-                    <div class="status-separator"></div>
-                    <div class="status-section">
-                        <span class="status-label">Reading time:</span>
-                        <span class="status-value">~1 min</span>
-                    </div>
-                    <div class="status-separator"></div>
-                    <div class="status-section">
-                        <span class="status-label" style="color: #10b981;">✓ Saved</span>
-                    </div>
-                    <div class="status-utility-buttons">
-                        <button class="status-utility-btn" title="Find & Replace">🔍</button>
-                        <button class="status-utility-btn" title="Export">📄</button>
-                        <button class="status-utility-btn" title="Context Cards (3 active)">📚 3</button>
-                    </div>
-                </div>
-
-                <!-- Legacy AI Panel (Hidden by default, can be toggled) -->
-                <div class="ai-input-box" id="legacyPanel" style="display: none;">
-                    <div class="ai-input-container">
-                        <textarea class="ai-input" rows="2"
-                            placeholder="Ask AI to help with your writing... (e.g., 'Continue the story' or 'Describe the forest')"></textarea>
-                        <div class="ai-input-actions">
-                            <button class="ai-submit-button">✨ Generate</button>
+                    <!-- Writing Style Section -->
+                    <div class="form-section">
+                        <h2>Writing Style</h2>
+                        <p>Technical preferences for your prose</p>
+                        <div class="form-group">
+                            <label>Narrative Perspective</label>
+                            <select>
+                                <option>Select...</option>
+                                <option selected>First Person</option>
+                                <option>Third Person Limited</option>
+                                <option>Third Person Omniscient</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tense</label>
+                            <select>
+                                <option selected>Past Tense</option>
+                                <option>Present Tense</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Style Guidelines</label>
+                            <textarea rows="4"
+                                placeholder="Specific instructions about pacing, vocabulary, etc.">Favor short, punchy sentences during action. Use sensory details. Avoid flowery language.</textarea>
                         </div>
                     </div>
-                    <div class="ai-quick-prompts">
-                        <span class="quick-prompts-label">Quick:</span>
-                        <button class="quick-prompt-button">Continue</button>
-                        <button class="quick-prompt-button">Describe scene</button>
-                        <button class="quick-prompt-button">Add dialogue</button>
-                        <button class="quick-prompt-button">Expand paragraph</button>
-                        <button class="quick-prompt-button">Suggest next event</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== Characters Tab ==================== -->
+        <div class="page-content" id="page-characters">
+            <div class="context-cards-layout">
+                <!-- Cards Sidebar -->
+                <div class="cards-sidebar">
+                    <div class="sidebar-header">
+                        <h2>Characters</h2>
+                        <button class="btn-create">+ New</button>
+                    </div>
+                    <input type="text" class="search-input" placeholder="Search characters...">
+                    <div class="cards-list">
+                        <div class="card-list-item active">
+                            <div class="card-list-name">Elena Vasquez</div>
+                            <div class="card-list-meta">8 details</div>
+                        </div>
+                        <div class="card-list-item">
+                            <div class="card-list-name">Marcus Chen</div>
+                            <div class="card-list-meta">5 details</div>
+                        </div>
+                        <div class="card-list-item">
+                            <div class="card-list-name">Dr. Sarah Webb</div>
+                            <div class="card-list-meta">4 details</div>
+                        </div>
+                        <div class="card-list-item">
+                            <div class="card-list-name">Commander Reyes</div>
+                            <div class="card-list-meta">3 details</div>
+                        </div>
+                        <div class="card-list-item">
+                            <div class="card-list-name">The Architect</div>
+                            <div class="card-list-meta">2 details</div>
+                        </div>
                     </div>
                 </div>
-            </main>
+
+                <!-- Card Detail -->
+                <div class="cards-detail">
+                    <div class="card-detail-header">
+                        <div class="card-avatar">👤</div>
+                        <div>
+                            <h2>Elena Vasquez</h2>
+                            <span style="color: var(--color-text-secondary); font-size: 0.9rem;">Protagonist •
+                                Character</span>
+                        </div>
+                    </div>
+
+                    <div class="card-entries">
+                        <div class="card-entry">
+                            <div class="card-entry-label">Role</div>
+                            <div class="card-entry-value">Main protagonist. Enhanced soldier with unique neural implant
+                                that allows her to interface with alien technology.</div>
+                        </div>
+                        <div class="card-entry">
+                            <div class="card-entry-label">Appearance</div>
+                            <div class="card-entry-value">Mid-20s, athletic build, short dark hair with neural interface
+                                ports visible at her temples.</div>
+                        </div>
+                        <div class="card-entry">
+                            <div class="card-entry-label">Personality</div>
+                            <div class="card-entry-value">Pragmatic, protective of her squad, struggles with authority.
+                                Dry sense of humor in tense situations.</div>
+                        </div>
+                        <div class="card-entry">
+                            <div class="card-entry-label">Background</div>
+                            <div class="card-entry-value">Orphaned during the First Contact War. Raised in military
+                                academies. Selected for enhancement program at 18.</div>
+                        </div>
+                        <div class="card-entry">
+                            <div class="card-entry-label">Goals</div>
+                            <div class="card-entry-value">Protect her unit. Discover the truth about her enhancements.
+                                Find her place in a post-war world.</div>
+                        </div>
+                        <div class="card-entry">
+                            <div class="card-entry-label">Relationships</div>
+                            <div class="card-entry-value">Close bond with Marcus (squad mate). Complicated history with
+                                Commander Reyes. Distrusts Dr. Webb.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== Analyzer Tab ==================== -->
+        <div class="page-content" id="page-analyzer">
+            <div class="page-scaffold">
+                <h1>Story Analyzer</h1>
+                <p class="page-desc">AI-powered analysis of your story's structure, characters, and themes</p>
+
+                <div class="analyzer-grid">
+                    <!-- Controls -->
+                    <div class="analyzer-controls">
+                        <h3>Analysis Options</h3>
+                        <div class="form-group">
+                            <label>Analysis Preset</label>
+                            <select>
+                                <option selected>Comprehensive</option>
+                                <option>Character Focus</option>
+                                <option>Plot Structure</option>
+                                <option>Emotional Beats</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Document</label>
+                            <select>
+                                <option selected>Chapter 1: The Test</option>
+                                <option>Chapter 2: The Journey</option>
+                                <option>All Chapters</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; margin-top: 1rem;">✨ Analyze Document</button>
+                        <p
+                            style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top: 1rem; text-align: center;">
+                            Demo: Analysis requires AI connection in the real app
+                        </p>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="analyzer-results">
+                        <h3 style="margin: 0 0 1.5rem; color: var(--color-text);">Sample Analysis Results</h3>
+
+                        <div class="analysis-result-item">
+                            <h4>📊 Plot Points Detected</h4>
+                            <p>The opening chapter establishes key elements: the protagonist's internal conflict, the
+                                setting's atmosphere, and foreshadowing of upcoming challenges.</p>
+                            <span class="result-tag">Major: Introduction</span>
+                            <span class="result-tag">Setup Phase</span>
+                        </div>
+
+                        <div class="analysis-result-item">
+                            <h4>👥 Character Analysis</h4>
+                            <p>Elena shows strong characterization through action and internal monologue. Her voice is
+                                consistent and distinctive.</p>
+                            <span class="result-tag">Elena Vasquez</span>
+                            <span class="result-tag">POV Character</span>
+                        </div>
+
+                        <div class="analysis-result-item">
+                            <h4>🎭 Emotional Beats</h4>
+                            <p>The chapter maintains tension with moments of vulnerability. Strong contrast between
+                                external action and internal reflection.</p>
+                            <span class="result-tag">Tension</span>
+                            <span class="result-tag">Uncertainty</span>
+                            <span class="result-tag">Determination</span>
+                        </div>
+
+                        <div class="analysis-result-item">
+                            <h4>📝 Summary</h4>
+                            <p>A solid opening chapter that effectively introduces the protagonist and sets the stakes.
+                                The first-person perspective creates immediate intimacy with Elena's journey.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== Timeline Tab ==================== -->
+        <div class="page-content" id="page-timeline">
+            <div class="placeholder-page">
+                <div class="placeholder-icon">🚧</div>
+                <h2>Timeline - Coming Soon</h2>
+                <p>The timeline feature is currently under development in the main application. It will allow you to
+                    visualize and organize events, character arcs, and plot threads across your story.</p>
+                <p style="margin-top: 1rem; font-style: italic;">Check back for updates!</p>
+            </div>
         </div>
     </div>
+
+    <!-- Mobile Sidebar Toggle (for Writing page) -->
+    <button class="mobile-sidebar-toggle" id="mobileSidebarToggle" title="Toggle Chapters">📚</button>
+    <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
 
     <!-- Sound Manifest -->
     <script src="assets/sound_manifest.js"></script>
@@ -1481,6 +2025,67 @@
         const savedTheme = localStorage.getItem('novellium-demo-theme') || 'dark';
         themeSelect.value = savedTheme;
         applyTheme(savedTheme);
+
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button[data-tab]');
+        const pageContents = document.querySelectorAll('.page-content');
+
+        function switchTab(tabName) {
+            // Update button states
+            tabButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+
+            // Update page visibility
+            pageContents.forEach(page => {
+                const pageId = page.id.replace('page-', '');
+                page.classList.toggle('active', pageId === tabName);
+            });
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.tab);
+                // Close mobile sidebar when switching tabs
+                closeMobileSidebar();
+            });
+        });
+
+        // Mobile sidebar toggle
+        const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+        const mobileSidebarOverlay = document.getElementById('mobileSidebarOverlay');
+        const documentSidebar = document.querySelector('.document-sidebar');
+
+        function openMobileSidebar() {
+            documentSidebar.classList.add('open');
+            mobileSidebarOverlay.classList.add('open');
+        }
+
+        function closeMobileSidebar() {
+            documentSidebar.classList.remove('open');
+            mobileSidebarOverlay.classList.remove('open');
+        }
+
+        mobileSidebarToggle.addEventListener('click', () => {
+            if (documentSidebar.classList.contains('open')) {
+                closeMobileSidebar();
+            } else {
+                openMobileSidebar();
+            }
+        });
+
+        mobileSidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+        // Hide mobile sidebar toggle when not on Writing tab
+        function updateMobileSidebarVisibility() {
+            const writingActive = document.getElementById('page-writing').classList.contains('active');
+            mobileSidebarToggle.style.display = writingActive ? '' : 'none';
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', updateMobileSidebarVisibility);
+        });
+        updateMobileSidebarVisibility();
 
         // Word count
         const editor = document.getElementById('editor');
